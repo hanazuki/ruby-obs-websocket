@@ -12,14 +12,17 @@ class Main
   def run(uri, password)
     connect(URI.parse(uri))
 
+    # To initialize OBS::WebSocket, pass a WebSocket connection.
     obs = OBS::WebSocket::Client.new(@driver)
 
     obs.on_open do
       obs.authenticate!(password).value!
 
+      # Request methods return Future values that can be waited for by `value!`.
       version = obs.get_version.value!
       puts "OBS version: #{version.obs_studio_version}; OBS-websocket version: #{version.obs_websocket_version}"
 
+      # Pass request parameters using keyword arguments. Composite types are mapped to Hash objects.
       obs.broadcast_custom_message(
         realm: 'helloworld',
         data: {greeting: 'Hello, World!'}
@@ -29,6 +32,7 @@ class Main
       obs.close
     end
 
+    # Listen for events using `on_*` methods. The event payload is yielded to the block.
     obs.on_broadcast_custom_message do |ev|
       puts ev.data['greeting']
       obs.close
