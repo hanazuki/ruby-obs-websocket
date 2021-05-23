@@ -77,20 +77,26 @@ module OBS
       #
       # @param executor the executor on which the callback is invoked
       # @yield Called when obs-websocket connection is established.
-      # @return [void]
+      # @return [Event]
       def on_open(executor: @executor, &listener)
-        @on_open.chain_on(executor, &listener)
-        nil
+        if listener
+          @on_open.chain_on(executor, &listener)
+        else
+          @on_open.with_default_executor(executor)
+        end
       end
 
       # Adds an event handler for connection termination.
       #
       # @param executor the executor on which the callback is invoked
       # @yield Called when obs-websocket connection is terminated.
-      # @return [void]
+      # @return [Future]
       def on_close(executor: @executor, &listener)
-        @on_close.then_on(executor, &listener)
-        nil
+        if listener
+          @on_close.then_on(executor, &listener)
+        else
+          @on_close.with_default_executor(executor)
+        end
       end
 
       # Adds an event handler for obs-websocket event.
