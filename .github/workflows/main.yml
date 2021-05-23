@@ -1,18 +1,34 @@
-name: Ruby
+name: Test
 
-on: [push,pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.0.1
-    - name: Run the default task
+        ruby-version: '3.0'
+        bundler-cache: true
+    - name: Test
+      run: bundle exec rake
+
+  codegen:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        bundler-cache: true
+    - name: Generate code
+      run: bundle exec rake codegen
+    - name: Check diff
       run: |
-        gem install bundler -v 2.2.15
-        bundle install
-        bundle exec rake
+        if ! git diff --quiet; then
+          echo "ERROR: Generated code is outdated" >&2
+          exit 1
+        fi

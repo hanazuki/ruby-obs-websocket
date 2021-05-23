@@ -1,0 +1,23 @@
+PATH
+  remote: ../..
+  specs:
+    obs-websocket (0.1.0)
+      concurrent-ruby (~> 1.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    concurrent-ruby (1.1.8)
+    websocket-driver (0.7.3)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.5)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  obs-websocket!
+  websocket-driver
+
+BUNDLED WITH
+   2.2.15

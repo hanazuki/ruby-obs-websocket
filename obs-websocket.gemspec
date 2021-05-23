@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['kasumi@rollingapple.net']
 
   spec.summary       = 'Ruby client library for obs-websocket'
-  spec.description   = 'Controls OBS Studio using obs-websocket protocol'
+  spec.description   = 'Controls OBS Studio remotely using obs-websocket protocol'
   spec.homepage      = 'https://github.com/hanazuki/ruby-obs-websocket'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
@@ -23,6 +23,5 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency 'example-gem', '~> 1.0'
+  spec.add_dependency 'concurrent-ruby', '~> 1.1'
 end
