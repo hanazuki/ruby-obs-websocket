@@ -32,6 +32,12 @@ jobs:
       run: |
         bundle install
         ./main.rb ws://localhost:4444 password
+    - name: Upload OBS logs
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: obs-studio-logs
+        path: tmp/config/obs-studio/logs/
 
   codegen:
     runs-on: ubuntu-latest
