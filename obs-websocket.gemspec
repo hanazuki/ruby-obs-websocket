@@ -16,9 +16,14 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri'] = 'https://github.com/hanazuki/ruby-obs-websocket'
   spec.metadata['changelog_uri'] = 'https://github.com/hanazuki/ruby-obs-websocket/blob/master/CHANGELOG.md'
 
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split(?\0).reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
-  end
+  spec.files = Dir[
+    'LICENSE',
+    '*.md',
+    '*.gemspec',
+    'lib/**/*',
+    'examples/**/*',
+    base: __dir__,
+  ]
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
