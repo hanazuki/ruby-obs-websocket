@@ -29,13 +29,13 @@ class Main
       obs.close
     end
 
-    obs.on_broadcast_custom_message do |e|
-      puts e.data['greeting']
+    obs.on_broadcast_custom_message do |ev|
+      puts ev.data['greeting']
       obs.close
     end
 
     obs.on_close(executor: :immediate) do |code, reason|
-      puts 'Bye!'
+      puts "Bye! (code: #{code})"
     end
 
     start_driver

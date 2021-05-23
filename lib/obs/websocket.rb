@@ -31,21 +31,18 @@ module OBS
       # @param executor the executor on which the callbacks are invoked
       def initialize(websocket, executor: :io)
         @websocket = websocket
-        @on_open, @on_close = [], []
         @response_dispatcher = ResponseDispatcher.new
         @event_dispatcher = EventDispatcher.new
         @executor = executor
+        @on_open = Concurrent::Promises.resolvable_event
+        @on_close = Concurrent::Promises.resolvable_future
 
         websocket.on(:open) do
-          @on_open.each do |(executor, listener)|
-            Concurrent::Promises.future_on(executor, &listener).run
-          end
+          @on_open.resolve
         end
 
         websocket.on(:close) do |event|
-          @on_close.each do |(executor, listener)|
-            Concurrent::Promises.future_on(executor, event.code, event.reason, &listener).run
-          end
+          @on_close.resolve(true, [event.code, event.reason])
         end
 
         websocket.on(:message) do |event|
@@ -82,7 +79,7 @@ module OBS
       # @yield Called when obs-websocket connection is established.
       # @return [void]
       def on_open(executor: @executor, &listener)
-        @on_open << [executor, listener]
+        @on_open.chain_on(executor, &listener)
         nil
       end
 
@@ -92,7 +89,7 @@ module OBS
       # @yield Called when obs-websocket connection is terminated.
       # @return [void]
       def on_close(executor: @executor, &listener)
-        @on_close << [executor, listener]
+        @on_close.then_on(executor, &listener)
         nil
       end
 
@@ -169,7 +166,7 @@ module OBS
           future: future,
         }
 
-        [message_id, future]
+        [message_id, future.with_hidden_resolvable]
       end
 
       def dispatch(message_id, payload)
