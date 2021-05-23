@@ -32,7 +32,7 @@ jobs:
       working-directory: examples/websocket-driver
       run: |
         bundle install
-        ./main.rb ws://localhost:4444 password
+        bundle exec ./main.rb ws://localhost:4444 password
     - name: Upload OBS logs
       uses: actions/upload-artifact@v2
       if: always()
