@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# SPDX-License-Identifier: MIT
 
 ENV['BUNDLE_GEMFILE'] = File.join(__dir__, 'Gemfile')
 require 'bundler/setup'

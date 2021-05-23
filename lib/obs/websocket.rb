@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 require 'concurrent'
 require 'digest/sha2'
 require 'json'
