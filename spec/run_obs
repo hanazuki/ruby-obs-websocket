@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'fileutils'
+
+include FileUtils
+
+xdg_config_home = Pathname(__dir__).join('../tmp/config').tap(&:mkpath)
+
+env = {
+  'XDG_CONFIG_HOME' => xdg_config_home.to_s,
+}
+
+cp_r Pathname(__dir__).join('config/obs-studio'), xdg_config_home
+
+command = ['obs']
+
+unless ENV.key?('DISPLAY')
+  command.unshift 'xvfb-run', '-a', 'exec'
+end
+
+exec(
+  env,
+  *command,
+  out: File::NULL,
+  err: File::NULL,
+)
