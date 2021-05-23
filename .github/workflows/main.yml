@@ -7,7 +7,7 @@ on:
     - cron: '0 15 * * 5'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -15,8 +15,30 @@ jobs:
       with:
         ruby-version: '3.0'
         bundler-cache: true
+    - name: Download obs-websocket
+      run: |
+        curl -LOfsS https://github.com/Palakis/obs-websocket/releases/download/4.9.0/obs-websocket_4.9.0-1_amd64.deb
+        sha256sum -c <<<"52d0dd7b89fc48db74986f6a8824c19229b5c8563e8937907894a493c4dbf56f  ./obs-websocket_4.9.0-1_amd64.deb"
+    - name: Install packages
+      run: |
+        sudo add-apt-repository ppa:obsproject/obs-studio
+        sudo apt-get update -qq
+        sudo apt-get install -y --no-install-recommends ./obs-websocket_4.9.0-1_amd64.deb xvfb
+    - name: Start OBS
+      run: spec/run_obs &
     - name: Test
       run: bundle exec rake
+    - name: Run examples
+      working-directory: examples/websocket-driver
+      run: |
+        bundle install
+        ./main.rb ws://localhost:4444 password
+    - name: Upload OBS logs
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: obs-studio-logs
+        path: tmp/config/obs-studio/logs/
 
   codegen:
     runs-on: ubuntu-latest
