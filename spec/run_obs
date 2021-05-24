@@ -19,9 +19,10 @@ unless ENV.key?('DISPLAY')
   command.unshift 'xvfb-run', '-a', 'exec'
 end
 
+redirect = $stdin.tty? ? {} : {out: File::NULL, err: File::NULL}
+
 exec(
   env,
   *command,
-  out: File::NULL,
-  err: File::NULL,
+  **redirect,
 )
