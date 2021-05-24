@@ -32,7 +32,7 @@ jobs:
       working-directory: examples/websocket-driver
       run: |
         bundle install
-        bundle exec ./main.rb ws://localhost:4444 password
+        bundle exec ruby ./main.rb ws://localhost:4444 password
     - name: Stop OBS
       if: always()
       run: |
