@@ -33,6 +33,11 @@ jobs:
       run: |
         bundle install
         bundle exec ./main.rb ws://localhost:4444 password
+    - name: Stop OBS
+      if: always()
+      run: |
+        killall -v obs || :
+        sleep 3
     - name: Upload OBS logs
       uses: actions/upload-artifact@v2
       if: always()
