@@ -27,7 +27,7 @@ class Main
       ).wait!
     rescue => e
       $stderr.puts e.message
-      obs.close
+      exit! 1
     end
 
     # Listen for events using `on_*` methods. The event payload is yielded to the block.

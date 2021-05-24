@@ -25,7 +25,13 @@ jobs:
         sudo apt-get update -qq
         sudo apt-get install -y --no-install-recommends ./obs-websocket_4.9.0-1_amd64.deb xvfb
     - name: Start OBS
-      run: spec/run_obs &
+      run: |
+        spec/run_obs &
+        for i in $(seq 15); do
+          nc -z -w 1 localhost 4444 && exit
+          sleep 1
+        done
+        exit 1
     - name: Test
       run: bundle exec rake
     - name: Run examples
