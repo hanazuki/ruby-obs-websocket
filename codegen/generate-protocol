@@ -220,17 +220,6 @@ end
 requests = protocol['requests'].values.flat_map do |requests|
   requests.map do |request|
     json_name = request['name']
-
-    # patch for https://github.com/Palakis/obs-websocket/pull/751
-    if json_name == 'ReorderSceneItems'
-      req = request['params'].find {|h| h['name'] == 'items' }
-      if req['type'] == 'Array<Scene>'
-        req['type'] = 'Array<Object>'
-      else
-        fail 'This patch is outdated'
-      end
-    end
-
     name = json_name.camelize
     params = params(request['params'])
     returns = params(request['returns'])
