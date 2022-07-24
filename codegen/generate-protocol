@@ -18,27 +18,20 @@ class Type
 end
 
 def simple_type(name)
-  name = name.camelize
-
-  # normalize
-  case name
-  when 'Double'
-    name = 'Float'
-  when 'Int'
-    name = 'Integer'
-  when 'Bool'
-    name = 'Boolean'
-  when 'Number'
-    name = 'Numeric'
-  end
-
   Type.new.tap do |o|
     o.define_singleton_method(:to_s) do
-      "Types::#{name}"
+      "TypeConverters::#{name}"
     end
 
     o.define_singleton_method(:as_yard) do
-      name
+      case name
+      when 'Any'
+        'Object'
+      when 'Number'
+        'Numeric'
+      else
+        name
+      end
     end
   end
 end
@@ -46,15 +39,7 @@ end
 def array_type(element)
   Type.new.tap do |o|
     o.define_singleton_method(:to_s) do
-      "Types::Array[#{element}]"
-    end
-
-    o.define_singleton_method(:add_element_field) do |k, t|
-      element.add_field(k, t)
-    end
-
-    o.define_singleton_method(:element_field) do |k|
-      element.field(k)
+      "TypeConverters::Array[#{element}]"
     end
 
     o.define_singleton_method(:as_yard) do
@@ -63,220 +48,175 @@ def array_type(element)
   end
 end
 
-def optional_type(element)
-  Type.new.tap do |o|
-    o.define_singleton_method(:to_s) do
-      "Types::Optional[#{element}]"
-    end
-
-    o.define_singleton_method(:add_field) do |k, t|
-      element.add_field(k, t)
-    end
-
-    o.define_singleton_method(:field) do |k|
-      element.field(k)
-    end
-
-    o.define_singleton_method(:optional?) { true }
-
-    o.define_singleton_method(:as_yard) do
-      "#{element.as_yard}, nil"
-    end
-  end
-end
-
 def object_type(**fields)
   Type.new.tap do |o|
     o.define_singleton_method(:to_s) do
       if fields.empty?
-        "Types::Object"
+        "TypeConverters::Object"
       else
-        "Types::Object[#{fields}]"
+        "TypeConverters::Object[#{fields}]"
       end
-    end
-
-    o.define_singleton_method(:add_field) do |k, t|
-      fields[k] = t
-    end
-
-    o.define_singleton_method(:field) do |k|
-      fields[k]
     end
 
     o.define_singleton_method(:as_yard) do
       'Hash'
     end
+
+    o.define_singleton_method(:add_field) do |name, field|
+      fields[name] = field
+    end
   end
 end
 
-def string_or_object_type(**fields)
+def optional_type(element)
   Type.new.tap do |o|
     o.define_singleton_method(:to_s) do
-      if fields.empty?
-        "Types::StringOrObject"
-      else
-        "Types::StringOrObject[#{fields}]"
-      end
-    end
-
-    o.define_singleton_method(:add_field) do |k, t|
-      fields[k] = t
+      "TypeConverters::Optional[#{element}]"
     end
 
     o.define_singleton_method(:as_yard) do
-      'String, Object'
+      "#{element.as_yard}, nil"
+    end
+
+    o.define_singleton_method(:optional?) do
+      true
+    end
+
+    o.define_singleton_method(:add_field) do |name, field|
+      element.add_field(name, field)
     end
   end
 end
 
-def ruby_type(type)
+def parse_type(type)
   case type
-  when 'String | Object'
-    string_or_object_type
-  when /\s+\(optional\)\z/i
-    optional_type(ruby_type($`))
   when /\AArray<(.*)>\z/
-    array_type(ruby_type($1))
+    array_type(parse_type($1))
   when 'Object'
     object_type
-  when /\A[a-z]+\z/i
+  when 'String', 'Number', 'Boolean', 'Any'
     simple_type(type)
   else
     fail "Type not recognized: #{type}"
   end
 end
 
-api_version = ARGV[0] or fail 'Usage: generate-api VERSION'
-protocol_uri = URI("https://raw.githubusercontent.com/Palakis/obs-websocket/#{api_version}/docs/generated/comments.json")
+@api_version = ARGV[0] or fail 'Usage: generate-api VERSION'
+def doc_uri(id = nil)
+  uri = "https://github.com/obsproject/obs-websocket/blob/#{@api_version}/docs/generated/protocol.md"
+  id ? "#{uri}##{id.gsub(/[^A-Za-z0-9]/, '').downcase}" : uri
+end
+
+protocol_uri = URI("https://raw.githubusercontent.com/obsproject/obs-websocket/#{@api_version}/docs/generated/protocol.json")
 protocol = JSON.parse(protocol_uri.open(&:read))
 
-def params(hs)
-  return [] unless hs
+def build_fields(fields)
+  fields.each_with_object({}) do |field, result|
+    name = field.fetch('valueName')
+    type = parse_type(field.fetch('valueType'))
+    type = optional_type(type) if field.fetch('valueOptional', false)
 
-  hs.each_with_object({}) do |h, params|
-    type = ruby_type(h['type'])
-    case name = h['name']
-    when /\A([^.]+)\.([^.]+)\z/
-      params[$1.underscore] ||= {
-        type: object_type,
-        json_name: $1,
-      }
-      params[$1.underscore][:type].add_field($2.underscore.intern, {type: type, json_name: $2})
-    when /\A([^.]+)\.([^.*]+)\.([^.]+)\z/
-      params[$1.underscore] ||= {
-        type: object_type,
-        json_name: $1,
-      }
-      params[$1.underscore][:type].field($2.underscore.intern)[:type].add_field($3.underscore.intern, {type: type, json_name: $2})
-    when /\A([^.]+)\.\*\.([^.]+)\z/
-      params[$1.underscore] ||= {
-        type: array_type(object_type),
-        json_name: $1,
-      }
-      params[$1.underscore][:type].add_element_field($2.underscore.intern, {type: type, json_name: $2})
-    when /\A([^.]+)\.\*\.([^.*]+)\.([^.]+)\z/
-      params[$1.underscore] ||= {
-        type: object_type,
-        json_name: $1,
-      }
-      params[$1.underscore][:type].element_field($2.underscore.intern)[:type].add_field($3.underscore.intern, {type: type, json_name: $2})
-    else
-      params[name.underscore] = {
+    case name
+    when /\A(\w+)\.(\w+)\z/
+      result[$1.underscore.intern][:type].add_field(
+        $2.underscore.intern,
         type: type,
-        json_name: name,
+        wire_name: $2,
+      )
+    when /\A\w+\z/
+      result[$&.underscore.intern] = {
+        type: type,
+        wire_name: $&,
       }
+    else
+      fail "Unexpected valueName: #{name}"
     end
   end
 end
 
-typedefs = protocol['typedefs'].map do |typedef|
-  name = typedef['typedefs'].first['name'].camelize
-  type = ruby_type(typedef['typedefs'].first['type'])
-  params(typedef['properties']).each do |key, v|
-    type.add_field(key, v)
-  end
-
-  {
-    name: name,
-    type: type,
-  }
+enums = protocol.fetch('enums').to_h do |enum|
+  [
+    enum.fetch('enumType'),
+    members: enum.fetch('enumIdentifiers').to_h {|mem|
+      [
+        mem.fetch('enumIdentifier'),
+        value: mem.fetch('enumValue'),
+        deprecated: mem.fetch('deprecated'),
+      ]
+    },
+  ]
 end
 
-events = protocol['events'].values.flat_map do |events|
-  events.map do |event|
-    json_name = event['name']
-    name = json_name.camelize
-    params = params(event['returns'])
-
-    {
-      name: name,
-      json_name: json_name,
-      params: params,
-      deprecated: event.key?('deprecated'),
-    }
-  end
+events = protocol.fetch('events').to_h do |event|
+  [
+    event.fetch('eventType'),
+    fields: build_fields(event.fetch('dataFields')),
+    deprecated: event.fetch('deprecated'),
+  ]
 end
 
-requests = protocol['requests'].values.flat_map do |requests|
-  requests.map do |request|
-    json_name = request['name']
-    name = json_name.camelize
-    params = params(request['params'])
-    returns = params(request['returns'])
-    {
-      name: name,
-      json_name: json_name,
-      params: params,
-      returns: returns,
-      deprecated: request.key?('deprecated'),
-    }
-  end
+requests = protocol.fetch('requests').to_h do |req|
+  [
+    req.fetch('requestType'),
+    request_fields: build_fields(req.fetch('requestFields')),
+    response_fields: build_fields(req.fetch('responseFields')),
+    deprecated: req.fetch('deprecated'),
+  ]
 end
 
 puts <<EOF
-# Generated from <#{protocol_uri}>
-# @see https://github.com/Palakis/obs-websocket/blob/#{api_version}/docs/generated/protocol.md
+# frozen_string_literal: false
+
+# The protocol definition of obs-websocket. Generated from <#{protocol_uri}>.
+# @see #{doc_uri}
 module OBS::WebSocket::Protocol
-  VERSION = #{api_version.dump}
+  # The version of obs-websocket from which this protocol definition is genereted.
+  VERSION = #{@api_version.dump}
 EOF
 
 puts <<EOF
-module Types
+module Enums
 EOF
 
-typedefs.each do |typedef|
+enums.each do |name, enum|
+  next if name == 'ObsMediaInputAction'  # This type has an ill-formed documentation
+
   puts <<EOF
-  #{typedef[:name]} = Type.new(name: #{typedef[:name].dump}) do
-    def as_ruby(o)
-      #{typedef[:name]}__BASE.as_ruby(o)
-    end
-    def as_json(o)
-      #{typedef[:name]}__BASE.as_json(o)
-    end
+  # @see #{doc_uri(name)}
+  module #{name}
+EOF
+  enum[:members].each do |mname, mem|
+    puts <<EOF
+    # @see #{doc_uri("#{name}::#{mname}")}
+    #{mname} = #{mem[:value]}
+EOF
   end
-  #{typedef[:name]}__BASE = #{typedef[:type]}
-  private_constant :#{typedef[:name]}__BASE
+  puts <<EOF
+  end
 EOF
 end
 
 puts <<EOF
-end  # module Types
+end  # module Enums
 EOF
 
 puts <<EOF
 module Events
 EOF
 
-events.each do |event|
+events.each do |name, event|
   puts <<EOF
-  class #{event[:name]} < Event
-    json_name #{event[:json_name].dump}
+  # An instance of <tt>#{name}</tt> event.
+  # @see #{doc_uri(name)}
+  class #{name} < Event
+    TYPE = #{name.dump}
+    CLASSES_BY_TYPE[TYPE] = self
 EOF
-  event[:params].each do |name, h|
+  event[:fields].each do |fname, field|
     puts <<EOF
-    # @!attribute [r] #{name}
-    # @return [#{h[:type].as_yard}] <tt>#{h[:json_name]}</tt> field
-    def #{name}; get_field(#{h[:json_name].dump}, #{h[:type]}); end
+    # @!attribute [r] #{fname}
+    # @return [#{field[:type].as_yard}] <tt>#{field[:wire_name]}</tt> field
+    def #{fname}; get_field(#{field[:wire_name].dump}, #{field[:type]}); end
 EOF
   end
   puts <<EOF
@@ -289,86 +229,20 @@ end  # module Events
 EOF
 
 puts <<EOF
-module Event::Mixin
-EOF
-
-events.each do |event|
-  puts <<EOF
-  # Adds an event handler for <tt>#{event[:json_name]}</tt> event.
-  # @yieldparam event [Events::#{event[:name]}] the event object
-  # @return [void]
-  # @see https://github.com/Palakis/obs-websocket/blob/#{api_version}/docs/generated/protocol.md##{event[:json_name].downcase}
-EOF
-  puts <<EOF if event[:deprecated]
-  # @deprecated This type of event is deprecated.
-EOF
-  puts <<EOF
-  def on_#{event[:name].underscore}(&listener)
-    on(#{event[:json_name].dump}, &listener)
-  end
-EOF
-end
-
-puts <<EOF
-end  # module Event::Mixin
-EOF
-
-puts <<EOF
 module Requests
 EOF
 
-requests.each do |request|
+requests.each do |name, request|
   puts <<EOF
-  # @see Request::Mixin##{request[:name].underscore}
-  # @see Responses::#{request[:name]}
-  # @see https://github.com/Palakis/obs-websocket/blob/#{api_version}/docs/generated/protocol.md##{request[:json_name].downcase}
-  class #{request[:name]} < Request
-    json_name #{request[:json_name].dump}
-    params(
-EOF
-  request[:params].each do |name, h|
-    puts <<EOF
-      #{name.dump}: {json_name: #{h[:json_name].dump}, type: #{h[:type]}},
-EOF
-  end
-  puts <<EOF
-    )
+  # An instance of <tt>#{name}</tt> request.
+  # @see Mixins::Request##{name.underscore}
+  # @see Responses::#{name}
+  # @see #{doc_uri(name)}
+  class #{name} < Request
+    TYPE = #{name.dump}
   end
 EOF
 end
-
-puts <<EOF
-module Request::Mixin
-EOF
-
-requests.each do |request|
-  puts <<EOF
-  # Sends <tt>#{request[:json_name]}</tt> request.
-  # @see https://github.com/Palakis/obs-websocket/blob/#{api_version}/docs/generated/protocol.md##{request[:json_name].downcase}
-EOF
-  request[:params].each do |name, h|
-    puts <<EOF
-  # @param #{name} [#{h[:type].as_yard}] <tt>#{h[:json_name]}</tt> field
-EOF
-  end
-
-  puts <<EOF if request[:deprecated]
-  # @deprecated This type of request is deprecated.
-EOF
-
-  params = request[:params].map {|name, h| "#{name}:#{" nil" if h[:type].optional?}" }.join(', ')
-  args = request[:params].map {|name, _| "#{name}: #{name}" }.join(', ')
-  puts <<EOF
-  # @return [Future<Responses::#{request[:name]}>]
-  def #{request[:name].underscore}(#{params})
-    send_request(Requests::#{request[:name]}.new({#{args}}))
-  end
-EOF
-end
-
-puts <<EOF
-end  # module Request::Mixin
-EOF
 
 puts <<EOF
 end  # module Requests
@@ -378,27 +252,89 @@ puts <<EOF
 module Responses
 EOF
 
-requests.each do |request|
+requests.each do |name, request|
   puts <<EOF
-  # @see Requests::#{request[:name]}
-  # @see https://github.com/Palakis/obs-websocket/blob/#{api_version}/docs/generated/protocol.md##{request[:json_name].downcase}
-  class #{request[:name]} < Response
+  # A response to <tt>#{name}</tt> request.
+  # @see Requests::#{name}
+  # @see #{doc_uri(name)}
+  class #{name} < Response
 EOF
-  request[:returns].each do |name, h|
+  request[:response_fields].each do |fname, field|
     puts <<EOF
-    # @!attribute [r] #{name}
-    # @return [#{h[:type].as_yard}] <tt>#{h[:json_name]}</tt> field
-    def #{name}; get_field(#{h[:json_name].dump}, #{h[:type]}); end
+    # @!attribute [r] #{fname}
+    # @return [#{field[:type].as_yard}] <tt>#{field[:wire_name]}</tt> field
+    def #{fname}; get_field(#{field[:wire_name].dump}, #{field[:type]}); end
 EOF
   end
   puts <<EOF
-    Requests::#{request[:name]}::Response = self
+    Requests::#{name}::Response = Responses::#{name}
   end
 EOF
 end
 
 puts <<EOF
 end  # module Responses
+EOF
+
+puts <<EOF
+module Mixins
+module Event
+EOF
+
+events.each do |name, event|
+  puts <<EOF
+  # Adds an event handler for <tt>#{name}</tt> event.
+  # @param executor the executor on which the callback is invoked
+  # @yieldparam event [Events::#{name}] the event object
+  # @return [void]
+  # @see #{doc_uri(name)}
+EOF
+  puts <<EOF if event[:deprecated]
+  # @deprecated This type of event is deprecated.
+EOF
+  puts <<EOF
+  def on_#{name.underscore}(executor: default_executor, &listener)
+    on(#{name.dump}, executor: executor, &listener)
+  end
+EOF
+end
+
+puts <<EOF
+end  # module Event
+EOF
+
+puts <<EOF
+module Request
+EOF
+
+requests.each do |name, request|
+  puts <<EOF
+  # Sends <tt>#{name}</tt> request.
+  # @see #{doc_uri(name)}
+EOF
+  request[:request_fields].each do |fname, field|
+    puts <<EOF
+  # @param #{fname} [#{field[:type].as_yard}] <tt>#{field[:wire_name]}</tt> field
+EOF
+  end
+
+  puts <<EOF if request[:deprecated]
+  # @deprecated This type of request is deprecated.
+EOF
+
+  params = request[:request_fields].map {|fname, field| "#{fname}:#{" nil" if field[:type].optional?}" }.join(', ')
+  args = request[:request_fields].map {|fname, field| "#{field[:wire_name].dump} => #{field[:type]}.as_json(#{fname})" }.join(', ')
+  puts <<EOF
+  # @return [Future<Responses::#{name}>]
+  def #{name.underscore}(#{params})
+    send_request(Requests::#{name}.new({#{args}}))
+  end
+EOF
+end
+
+puts <<EOF
+end  # module Request
+end  # module Mixins
 EOF
 
 puts <<EOF
