@@ -8,7 +8,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     concurrent-ruby (1.1.10)
-    websocket-driver (0.7.3)
+    websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
 
