@@ -13,7 +13,7 @@ port, password = ARGV
 command = %W[obs --websocket_port=#{port} --websocket_password=#{password} --websocket_debug]
 
 unless ENV.key?('DISPLAY')
-  command.unshift 'xvfb-run', '-a', 'exec'
+  command.unshift 'xvfb-run', '-a'
 end
 
 redirect = $stdin.tty? ? {} : {out: File::NULL, err: File::NULL}
