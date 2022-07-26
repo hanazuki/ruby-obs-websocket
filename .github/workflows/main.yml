@@ -40,7 +40,7 @@ jobs:
         done
         exit 1
     - name: Test
-      run: bundle exec rake
+      run: xvfb-run -a bundle exec rake
     - name: Run examples
       working-directory: examples/websocket-driver
       run: |
