@@ -383,7 +383,7 @@ module OBS
           def [](element_type)
             TypeConverter.new(name: "Array[#{element_type.name}]", element_type: element_type) do
               def as_ruby(a)
-                raise ConversionError.new("Array value is expected", value: a) unless Array === a
+                raise ConversionError.new("Array value is expected", value: a) unless ::Array === a
                 a.map {|v| @element_type.as_ruby(v) }
               end
 

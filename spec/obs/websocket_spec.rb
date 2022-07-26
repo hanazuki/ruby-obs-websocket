@@ -54,4 +54,19 @@ RSpec.describe OBS::WebSocket::Client, :integration do
       end.to yield_with_args(OBS::WebSocket::Protocol::Events::CustomEvent)
     end
   end
+
+  example '#get_obs_version' do
+    subject.password = websocket_password
+    subject.on_open do
+      ret = subject.get_version.value!
+      expect(ret.obs_version).to be_a String
+      expect(ret.rpc_version).to be_an Integer
+      expect(ret.available_requests).to be_an Array
+      expect(ret.available_requests).to all be_a String
+
+      subject.close
+    end
+
+    start_driver
+  end
 end
