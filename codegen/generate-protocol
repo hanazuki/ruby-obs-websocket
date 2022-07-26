@@ -240,6 +240,21 @@ requests.each do |name, request|
   # @see #{doc_uri(name)}
   class #{name} < Request
     TYPE = #{name.dump}
+    def initialize(args)
+      super({
+EOF
+  request[:request_fields].each do |fname, field|
+    puts <<EOF
+        #{field[:wire_name].dump} => begin
+          #{field[:type]}.as_json(args[:#{fname}])
+        rescue ConversionError => e
+          raise TypeError, #{fname.to_s.dump} ": \#{e.message}"
+        end,
+EOF
+  end
+  puts <<EOF
+      })
+    end
   end
 EOF
 end
@@ -255,7 +270,7 @@ EOF
 requests.each do |name, request|
   puts <<EOF
   # A response to <tt>#{name}</tt> request.
-  # @see Requests::#{name}
+  # @see Mixins::Request##{name.underscore}
   # @see #{doc_uri(name)}
   class #{name} < Response
 EOF
@@ -317,17 +332,13 @@ EOF
   # @param #{fname} [#{field[:type].as_yard}] <tt>#{field[:wire_name]}</tt> field
 EOF
   end
-
   puts <<EOF if request[:deprecated]
   # @deprecated This type of request is deprecated.
 EOF
-
-  params = request[:request_fields].map {|fname, field| "#{fname}:#{" nil" if field[:type].optional?}" }.join(', ')
-  args = request[:request_fields].map {|fname, field| "#{field[:wire_name].dump} => #{field[:type]}.as_json(#{fname})" }.join(', ')
   puts <<EOF
   # @return [Future<Responses::#{name}>]
-  def #{name.underscore}(#{params})
-    send_request(Requests::#{name}.new({#{args}}))
+  def #{name.underscore}(#{request[:request_fields].map {|fname, field| "#{fname}:#{" nil" if field[:type].optional?}" }.join(', ')})
+    send_request(Requests::#{name}.new({#{request[:request_fields].map {|fname,| "#{fname}: #{fname}" }.join(', ')}}))
   end
 EOF
 end

@@ -792,6 +792,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getpersistentdata
   class GetPersistentData < Request
     TYPE = "GetPersistentData"
+    def initialize(args)
+      super({
+        "realm" => begin
+          TypeConverters::String.as_json(args[:realm])
+        rescue ConversionError => e
+          raise TypeError, "realm" ": #{e.message}"
+        end,
+        "slotName" => begin
+          TypeConverters::String.as_json(args[:slot_name])
+        rescue ConversionError => e
+          raise TypeError, "slot_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetPersistentData</tt> request.
   # @see Mixins::Request#set_persistent_data
@@ -799,6 +813,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setpersistentdata
   class SetPersistentData < Request
     TYPE = "SetPersistentData"
+    def initialize(args)
+      super({
+        "realm" => begin
+          TypeConverters::String.as_json(args[:realm])
+        rescue ConversionError => e
+          raise TypeError, "realm" ": #{e.message}"
+        end,
+        "slotName" => begin
+          TypeConverters::String.as_json(args[:slot_name])
+        rescue ConversionError => e
+          raise TypeError, "slot_name" ": #{e.message}"
+        end,
+        "slotValue" => begin
+          TypeConverters::Any.as_json(args[:slot_value])
+        rescue ConversionError => e
+          raise TypeError, "slot_value" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneCollectionList</tt> request.
   # @see Mixins::Request#get_scene_collection_list
@@ -806,6 +839,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenecollectionlist
   class GetSceneCollectionList < Request
     TYPE = "GetSceneCollectionList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetCurrentSceneCollection</tt> request.
   # @see Mixins::Request#set_current_scene_collection
@@ -813,6 +850,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenecollection
   class SetCurrentSceneCollection < Request
     TYPE = "SetCurrentSceneCollection"
+    def initialize(args)
+      super({
+        "sceneCollectionName" => begin
+          TypeConverters::String.as_json(args[:scene_collection_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_collection_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CreateSceneCollection</tt> request.
   # @see Mixins::Request#create_scene_collection
@@ -820,6 +866,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscenecollection
   class CreateSceneCollection < Request
     TYPE = "CreateSceneCollection"
+    def initialize(args)
+      super({
+        "sceneCollectionName" => begin
+          TypeConverters::String.as_json(args[:scene_collection_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_collection_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetProfileList</tt> request.
   # @see Mixins::Request#get_profile_list
@@ -827,6 +882,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofilelist
   class GetProfileList < Request
     TYPE = "GetProfileList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetCurrentProfile</tt> request.
   # @see Mixins::Request#set_current_profile
@@ -834,6 +893,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentprofile
   class SetCurrentProfile < Request
     TYPE = "SetCurrentProfile"
+    def initialize(args)
+      super({
+        "profileName" => begin
+          TypeConverters::String.as_json(args[:profile_name])
+        rescue ConversionError => e
+          raise TypeError, "profile_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CreateProfile</tt> request.
   # @see Mixins::Request#create_profile
@@ -841,6 +909,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createprofile
   class CreateProfile < Request
     TYPE = "CreateProfile"
+    def initialize(args)
+      super({
+        "profileName" => begin
+          TypeConverters::String.as_json(args[:profile_name])
+        rescue ConversionError => e
+          raise TypeError, "profile_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>RemoveProfile</tt> request.
   # @see Mixins::Request#remove_profile
@@ -848,6 +925,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeprofile
   class RemoveProfile < Request
     TYPE = "RemoveProfile"
+    def initialize(args)
+      super({
+        "profileName" => begin
+          TypeConverters::String.as_json(args[:profile_name])
+        rescue ConversionError => e
+          raise TypeError, "profile_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetProfileParameter</tt> request.
   # @see Mixins::Request#get_profile_parameter
@@ -855,6 +941,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofileparameter
   class GetProfileParameter < Request
     TYPE = "GetProfileParameter"
+    def initialize(args)
+      super({
+        "parameterCategory" => begin
+          TypeConverters::String.as_json(args[:parameter_category])
+        rescue ConversionError => e
+          raise TypeError, "parameter_category" ": #{e.message}"
+        end,
+        "parameterName" => begin
+          TypeConverters::String.as_json(args[:parameter_name])
+        rescue ConversionError => e
+          raise TypeError, "parameter_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetProfileParameter</tt> request.
   # @see Mixins::Request#set_profile_parameter
@@ -862,6 +962,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setprofileparameter
   class SetProfileParameter < Request
     TYPE = "SetProfileParameter"
+    def initialize(args)
+      super({
+        "parameterCategory" => begin
+          TypeConverters::String.as_json(args[:parameter_category])
+        rescue ConversionError => e
+          raise TypeError, "parameter_category" ": #{e.message}"
+        end,
+        "parameterName" => begin
+          TypeConverters::String.as_json(args[:parameter_name])
+        rescue ConversionError => e
+          raise TypeError, "parameter_name" ": #{e.message}"
+        end,
+        "parameterValue" => begin
+          TypeConverters::String.as_json(args[:parameter_value])
+        rescue ConversionError => e
+          raise TypeError, "parameter_value" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetVideoSettings</tt> request.
   # @see Mixins::Request#get_video_settings
@@ -869,6 +988,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvideosettings
   class GetVideoSettings < Request
     TYPE = "GetVideoSettings"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetVideoSettings</tt> request.
   # @see Mixins::Request#set_video_settings
@@ -876,6 +999,40 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setvideosettings
   class SetVideoSettings < Request
     TYPE = "SetVideoSettings"
+    def initialize(args)
+      super({
+        "fpsNumerator" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:fps_numerator])
+        rescue ConversionError => e
+          raise TypeError, "fps_numerator" ": #{e.message}"
+        end,
+        "fpsDenominator" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:fps_denominator])
+        rescue ConversionError => e
+          raise TypeError, "fps_denominator" ": #{e.message}"
+        end,
+        "baseWidth" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:base_width])
+        rescue ConversionError => e
+          raise TypeError, "base_width" ": #{e.message}"
+        end,
+        "baseHeight" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:base_height])
+        rescue ConversionError => e
+          raise TypeError, "base_height" ": #{e.message}"
+        end,
+        "outputWidth" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:output_width])
+        rescue ConversionError => e
+          raise TypeError, "output_width" ": #{e.message}"
+        end,
+        "outputHeight" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:output_height])
+        rescue ConversionError => e
+          raise TypeError, "output_height" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetStreamServiceSettings</tt> request.
   # @see Mixins::Request#get_stream_service_settings
@@ -883,6 +1040,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamservicesettings
   class GetStreamServiceSettings < Request
     TYPE = "GetStreamServiceSettings"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetStreamServiceSettings</tt> request.
   # @see Mixins::Request#set_stream_service_settings
@@ -890,6 +1051,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setstreamservicesettings
   class SetStreamServiceSettings < Request
     TYPE = "SetStreamServiceSettings"
+    def initialize(args)
+      super({
+        "streamServiceType" => begin
+          TypeConverters::String.as_json(args[:stream_service_type])
+        rescue ConversionError => e
+          raise TypeError, "stream_service_type" ": #{e.message}"
+        end,
+        "streamServiceSettings" => begin
+          TypeConverters::Object.as_json(args[:stream_service_settings])
+        rescue ConversionError => e
+          raise TypeError, "stream_service_settings" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetRecordDirectory</tt> request.
   # @see Mixins::Request#get_record_directory
@@ -897,6 +1072,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getrecorddirectory
   class GetRecordDirectory < Request
     TYPE = "GetRecordDirectory"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetSourceFilterList</tt> request.
   # @see Mixins::Request#get_source_filter_list
@@ -904,6 +1083,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilterlist
   class GetSourceFilterList < Request
     TYPE = "GetSourceFilterList"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSourceFilterDefaultSettings</tt> request.
   # @see Mixins::Request#get_source_filter_default_settings
@@ -911,6 +1099,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilterdefaultsettings
   class GetSourceFilterDefaultSettings < Request
     TYPE = "GetSourceFilterDefaultSettings"
+    def initialize(args)
+      super({
+        "filterKind" => begin
+          TypeConverters::String.as_json(args[:filter_kind])
+        rescue ConversionError => e
+          raise TypeError, "filter_kind" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CreateSourceFilter</tt> request.
   # @see Mixins::Request#create_source_filter
@@ -918,6 +1115,30 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsourcefilter
   class CreateSourceFilter < Request
     TYPE = "CreateSourceFilter"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+        "filterKind" => begin
+          TypeConverters::String.as_json(args[:filter_kind])
+        rescue ConversionError => e
+          raise TypeError, "filter_kind" ": #{e.message}"
+        end,
+        "filterSettings" => begin
+          TypeConverters::Optional[TypeConverters::Object].as_json(args[:filter_settings])
+        rescue ConversionError => e
+          raise TypeError, "filter_settings" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>RemoveSourceFilter</tt> request.
   # @see Mixins::Request#remove_source_filter
@@ -925,6 +1146,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesourcefilter
   class RemoveSourceFilter < Request
     TYPE = "RemoveSourceFilter"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSourceFilterName</tt> request.
   # @see Mixins::Request#set_source_filter_name
@@ -932,6 +1167,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltername
   class SetSourceFilterName < Request
     TYPE = "SetSourceFilterName"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+        "newFilterName" => begin
+          TypeConverters::String.as_json(args[:new_filter_name])
+        rescue ConversionError => e
+          raise TypeError, "new_filter_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSourceFilter</tt> request.
   # @see Mixins::Request#get_source_filter
@@ -939,6 +1193,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilter
   class GetSourceFilter < Request
     TYPE = "GetSourceFilter"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSourceFilterIndex</tt> request.
   # @see Mixins::Request#set_source_filter_index
@@ -946,6 +1214,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterindex
   class SetSourceFilterIndex < Request
     TYPE = "SetSourceFilterIndex"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+        "filterIndex" => begin
+          TypeConverters::Number.as_json(args[:filter_index])
+        rescue ConversionError => e
+          raise TypeError, "filter_index" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSourceFilterSettings</tt> request.
   # @see Mixins::Request#set_source_filter_settings
@@ -953,6 +1240,30 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltersettings
   class SetSourceFilterSettings < Request
     TYPE = "SetSourceFilterSettings"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+        "filterSettings" => begin
+          TypeConverters::Object.as_json(args[:filter_settings])
+        rescue ConversionError => e
+          raise TypeError, "filter_settings" ": #{e.message}"
+        end,
+        "overlay" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:overlay])
+        rescue ConversionError => e
+          raise TypeError, "overlay" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSourceFilterEnabled</tt> request.
   # @see Mixins::Request#set_source_filter_enabled
@@ -960,6 +1271,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterenabled
   class SetSourceFilterEnabled < Request
     TYPE = "SetSourceFilterEnabled"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "filterName" => begin
+          TypeConverters::String.as_json(args[:filter_name])
+        rescue ConversionError => e
+          raise TypeError, "filter_name" ": #{e.message}"
+        end,
+        "filterEnabled" => begin
+          TypeConverters::Boolean.as_json(args[:filter_enabled])
+        rescue ConversionError => e
+          raise TypeError, "filter_enabled" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetVersion</tt> request.
   # @see Mixins::Request#get_version
@@ -967,6 +1297,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getversion
   class GetVersion < Request
     TYPE = "GetVersion"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetStats</tt> request.
   # @see Mixins::Request#get_stats
@@ -974,6 +1308,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstats
   class GetStats < Request
     TYPE = "GetStats"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>BroadcastCustomEvent</tt> request.
   # @see Mixins::Request#broadcast_custom_event
@@ -981,6 +1319,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#broadcastcustomevent
   class BroadcastCustomEvent < Request
     TYPE = "BroadcastCustomEvent"
+    def initialize(args)
+      super({
+        "eventData" => begin
+          TypeConverters::Object.as_json(args[:event_data])
+        rescue ConversionError => e
+          raise TypeError, "event_data" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CallVendorRequest</tt> request.
   # @see Mixins::Request#call_vendor_request
@@ -988,6 +1335,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#callvendorrequest
   class CallVendorRequest < Request
     TYPE = "CallVendorRequest"
+    def initialize(args)
+      super({
+        "vendorName" => begin
+          TypeConverters::String.as_json(args[:vendor_name])
+        rescue ConversionError => e
+          raise TypeError, "vendor_name" ": #{e.message}"
+        end,
+        "requestType" => begin
+          TypeConverters::String.as_json(args[:request_type])
+        rescue ConversionError => e
+          raise TypeError, "request_type" ": #{e.message}"
+        end,
+        "requestData" => begin
+          TypeConverters::Optional[TypeConverters::Object].as_json(args[:request_data])
+        rescue ConversionError => e
+          raise TypeError, "request_data" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetHotkeyList</tt> request.
   # @see Mixins::Request#get_hotkey_list
@@ -995,6 +1361,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gethotkeylist
   class GetHotkeyList < Request
     TYPE = "GetHotkeyList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>TriggerHotkeyByName</tt> request.
   # @see Mixins::Request#trigger_hotkey_by_name
@@ -1002,6 +1372,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerhotkeybyname
   class TriggerHotkeyByName < Request
     TYPE = "TriggerHotkeyByName"
+    def initialize(args)
+      super({
+        "hotkeyName" => begin
+          TypeConverters::String.as_json(args[:hotkey_name])
+        rescue ConversionError => e
+          raise TypeError, "hotkey_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>TriggerHotkeyByKeySequence</tt> request.
   # @see Mixins::Request#trigger_hotkey_by_key_sequence
@@ -1009,6 +1388,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerhotkeybykeysequence
   class TriggerHotkeyByKeySequence < Request
     TYPE = "TriggerHotkeyByKeySequence"
+    def initialize(args)
+      super({
+        "keyId" => begin
+          TypeConverters::Optional[TypeConverters::String].as_json(args[:key_id])
+        rescue ConversionError => e
+          raise TypeError, "key_id" ": #{e.message}"
+        end,
+        "keyModifiers" => begin
+          TypeConverters::Optional[TypeConverters::Object[{:shift=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"shift"}, :control=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"control"}, :alt=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"alt"}, :command=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"command"}}]].as_json(args[:key_modifiers])
+        rescue ConversionError => e
+          raise TypeError, "key_modifiers" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>Sleep</tt> request.
   # @see Mixins::Request#sleep
@@ -1016,6 +1409,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#sleep
   class Sleep < Request
     TYPE = "Sleep"
+    def initialize(args)
+      super({
+        "sleepMillis" => begin
+          TypeConverters::Number.as_json(args[:sleep_millis])
+        rescue ConversionError => e
+          raise TypeError, "sleep_millis" ": #{e.message}"
+        end,
+        "sleepFrames" => begin
+          TypeConverters::Number.as_json(args[:sleep_frames])
+        rescue ConversionError => e
+          raise TypeError, "sleep_frames" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputList</tt> request.
   # @see Mixins::Request#get_input_list
@@ -1023,6 +1430,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputlist
   class GetInputList < Request
     TYPE = "GetInputList"
+    def initialize(args)
+      super({
+        "inputKind" => begin
+          TypeConverters::Optional[TypeConverters::String].as_json(args[:input_kind])
+        rescue ConversionError => e
+          raise TypeError, "input_kind" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputKindList</tt> request.
   # @see Mixins::Request#get_input_kind_list
@@ -1030,6 +1446,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputkindlist
   class GetInputKindList < Request
     TYPE = "GetInputKindList"
+    def initialize(args)
+      super({
+        "unversioned" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:unversioned])
+        rescue ConversionError => e
+          raise TypeError, "unversioned" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSpecialInputs</tt> request.
   # @see Mixins::Request#get_special_inputs
@@ -1037,6 +1462,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getspecialinputs
   class GetSpecialInputs < Request
     TYPE = "GetSpecialInputs"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>CreateInput</tt> request.
   # @see Mixins::Request#create_input
@@ -1044,6 +1473,35 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createinput
   class CreateInput < Request
     TYPE = "CreateInput"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputKind" => begin
+          TypeConverters::String.as_json(args[:input_kind])
+        rescue ConversionError => e
+          raise TypeError, "input_kind" ": #{e.message}"
+        end,
+        "inputSettings" => begin
+          TypeConverters::Optional[TypeConverters::Object].as_json(args[:input_settings])
+        rescue ConversionError => e
+          raise TypeError, "input_settings" ": #{e.message}"
+        end,
+        "sceneItemEnabled" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:scene_item_enabled])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_enabled" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>RemoveInput</tt> request.
   # @see Mixins::Request#remove_input
@@ -1051,6 +1509,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeinput
   class RemoveInput < Request
     TYPE = "RemoveInput"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputName</tt> request.
   # @see Mixins::Request#set_input_name
@@ -1058,6 +1525,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputname
   class SetInputName < Request
     TYPE = "SetInputName"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "newInputName" => begin
+          TypeConverters::String.as_json(args[:new_input_name])
+        rescue ConversionError => e
+          raise TypeError, "new_input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputDefaultSettings</tt> request.
   # @see Mixins::Request#get_input_default_settings
@@ -1065,6 +1546,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputdefaultsettings
   class GetInputDefaultSettings < Request
     TYPE = "GetInputDefaultSettings"
+    def initialize(args)
+      super({
+        "inputKind" => begin
+          TypeConverters::String.as_json(args[:input_kind])
+        rescue ConversionError => e
+          raise TypeError, "input_kind" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputSettings</tt> request.
   # @see Mixins::Request#get_input_settings
@@ -1072,6 +1562,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputsettings
   class GetInputSettings < Request
     TYPE = "GetInputSettings"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputSettings</tt> request.
   # @see Mixins::Request#set_input_settings
@@ -1079,6 +1578,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputsettings
   class SetInputSettings < Request
     TYPE = "SetInputSettings"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputSettings" => begin
+          TypeConverters::Object.as_json(args[:input_settings])
+        rescue ConversionError => e
+          raise TypeError, "input_settings" ": #{e.message}"
+        end,
+        "overlay" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:overlay])
+        rescue ConversionError => e
+          raise TypeError, "overlay" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputMute</tt> request.
   # @see Mixins::Request#get_input_mute
@@ -1086,6 +1604,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputmute
   class GetInputMute < Request
     TYPE = "GetInputMute"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputMute</tt> request.
   # @see Mixins::Request#set_input_mute
@@ -1093,6 +1620,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputmute
   class SetInputMute < Request
     TYPE = "SetInputMute"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputMuted" => begin
+          TypeConverters::Boolean.as_json(args[:input_muted])
+        rescue ConversionError => e
+          raise TypeError, "input_muted" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>ToggleInputMute</tt> request.
   # @see Mixins::Request#toggle_input_mute
@@ -1100,6 +1641,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#toggleinputmute
   class ToggleInputMute < Request
     TYPE = "ToggleInputMute"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputVolume</tt> request.
   # @see Mixins::Request#get_input_volume
@@ -1107,6 +1657,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputvolume
   class GetInputVolume < Request
     TYPE = "GetInputVolume"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputVolume</tt> request.
   # @see Mixins::Request#set_input_volume
@@ -1114,6 +1673,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputvolume
   class SetInputVolume < Request
     TYPE = "SetInputVolume"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputVolumeMul" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:input_volume_mul])
+        rescue ConversionError => e
+          raise TypeError, "input_volume_mul" ": #{e.message}"
+        end,
+        "inputVolumeDb" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:input_volume_db])
+        rescue ConversionError => e
+          raise TypeError, "input_volume_db" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputAudioBalance</tt> request.
   # @see Mixins::Request#get_input_audio_balance
@@ -1121,6 +1699,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiobalance
   class GetInputAudioBalance < Request
     TYPE = "GetInputAudioBalance"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputAudioBalance</tt> request.
   # @see Mixins::Request#set_input_audio_balance
@@ -1128,6 +1715,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiobalance
   class SetInputAudioBalance < Request
     TYPE = "SetInputAudioBalance"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputAudioBalance" => begin
+          TypeConverters::Number.as_json(args[:input_audio_balance])
+        rescue ConversionError => e
+          raise TypeError, "input_audio_balance" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputAudioSyncOffset</tt> request.
   # @see Mixins::Request#get_input_audio_sync_offset
@@ -1135,6 +1736,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiosyncoffset
   class GetInputAudioSyncOffset < Request
     TYPE = "GetInputAudioSyncOffset"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputAudioSyncOffset</tt> request.
   # @see Mixins::Request#set_input_audio_sync_offset
@@ -1142,6 +1752,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiosyncoffset
   class SetInputAudioSyncOffset < Request
     TYPE = "SetInputAudioSyncOffset"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputAudioSyncOffset" => begin
+          TypeConverters::Number.as_json(args[:input_audio_sync_offset])
+        rescue ConversionError => e
+          raise TypeError, "input_audio_sync_offset" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputAudioMonitorType</tt> request.
   # @see Mixins::Request#get_input_audio_monitor_type
@@ -1149,6 +1773,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiomonitortype
   class GetInputAudioMonitorType < Request
     TYPE = "GetInputAudioMonitorType"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputAudioMonitorType</tt> request.
   # @see Mixins::Request#set_input_audio_monitor_type
@@ -1156,6 +1789,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiomonitortype
   class SetInputAudioMonitorType < Request
     TYPE = "SetInputAudioMonitorType"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "monitorType" => begin
+          TypeConverters::String.as_json(args[:monitor_type])
+        rescue ConversionError => e
+          raise TypeError, "monitor_type" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputAudioTracks</tt> request.
   # @see Mixins::Request#get_input_audio_tracks
@@ -1163,6 +1810,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiotracks
   class GetInputAudioTracks < Request
     TYPE = "GetInputAudioTracks"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetInputAudioTracks</tt> request.
   # @see Mixins::Request#set_input_audio_tracks
@@ -1170,6 +1826,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiotracks
   class SetInputAudioTracks < Request
     TYPE = "SetInputAudioTracks"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "inputAudioTracks" => begin
+          TypeConverters::Object.as_json(args[:input_audio_tracks])
+        rescue ConversionError => e
+          raise TypeError, "input_audio_tracks" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetInputPropertiesListPropertyItems</tt> request.
   # @see Mixins::Request#get_input_properties_list_property_items
@@ -1177,6 +1847,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputpropertieslistpropertyitems
   class GetInputPropertiesListPropertyItems < Request
     TYPE = "GetInputPropertiesListPropertyItems"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "propertyName" => begin
+          TypeConverters::String.as_json(args[:property_name])
+        rescue ConversionError => e
+          raise TypeError, "property_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>PressInputPropertiesButton</tt> request.
   # @see Mixins::Request#press_input_properties_button
@@ -1184,6 +1868,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#pressinputpropertiesbutton
   class PressInputPropertiesButton < Request
     TYPE = "PressInputPropertiesButton"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "propertyName" => begin
+          TypeConverters::String.as_json(args[:property_name])
+        rescue ConversionError => e
+          raise TypeError, "property_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetMediaInputStatus</tt> request.
   # @see Mixins::Request#get_media_input_status
@@ -1191,6 +1889,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmediainputstatus
   class GetMediaInputStatus < Request
     TYPE = "GetMediaInputStatus"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetMediaInputCursor</tt> request.
   # @see Mixins::Request#set_media_input_cursor
@@ -1198,6 +1905,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setmediainputcursor
   class SetMediaInputCursor < Request
     TYPE = "SetMediaInputCursor"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "mediaCursor" => begin
+          TypeConverters::Number.as_json(args[:media_cursor])
+        rescue ConversionError => e
+          raise TypeError, "media_cursor" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>OffsetMediaInputCursor</tt> request.
   # @see Mixins::Request#offset_media_input_cursor
@@ -1205,6 +1926,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#offsetmediainputcursor
   class OffsetMediaInputCursor < Request
     TYPE = "OffsetMediaInputCursor"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "mediaCursorOffset" => begin
+          TypeConverters::Number.as_json(args[:media_cursor_offset])
+        rescue ConversionError => e
+          raise TypeError, "media_cursor_offset" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>TriggerMediaInputAction</tt> request.
   # @see Mixins::Request#trigger_media_input_action
@@ -1212,6 +1947,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggermediainputaction
   class TriggerMediaInputAction < Request
     TYPE = "TriggerMediaInputAction"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+        "mediaAction" => begin
+          TypeConverters::String.as_json(args[:media_action])
+        rescue ConversionError => e
+          raise TypeError, "media_action" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetVirtualCamStatus</tt> request.
   # @see Mixins::Request#get_virtual_cam_status
@@ -1219,6 +1968,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvirtualcamstatus
   class GetVirtualCamStatus < Request
     TYPE = "GetVirtualCamStatus"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ToggleVirtualCam</tt> request.
   # @see Mixins::Request#toggle_virtual_cam
@@ -1226,6 +1979,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglevirtualcam
   class ToggleVirtualCam < Request
     TYPE = "ToggleVirtualCam"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StartVirtualCam</tt> request.
   # @see Mixins::Request#start_virtual_cam
@@ -1233,6 +1990,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startvirtualcam
   class StartVirtualCam < Request
     TYPE = "StartVirtualCam"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StopVirtualCam</tt> request.
   # @see Mixins::Request#stop_virtual_cam
@@ -1240,6 +2001,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopvirtualcam
   class StopVirtualCam < Request
     TYPE = "StopVirtualCam"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetReplayBufferStatus</tt> request.
   # @see Mixins::Request#get_replay_buffer_status
@@ -1247,6 +2012,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getreplaybufferstatus
   class GetReplayBufferStatus < Request
     TYPE = "GetReplayBufferStatus"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ToggleReplayBuffer</tt> request.
   # @see Mixins::Request#toggle_replay_buffer
@@ -1254,6 +2023,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglereplaybuffer
   class ToggleReplayBuffer < Request
     TYPE = "ToggleReplayBuffer"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StartReplayBuffer</tt> request.
   # @see Mixins::Request#start_replay_buffer
@@ -1261,6 +2034,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startreplaybuffer
   class StartReplayBuffer < Request
     TYPE = "StartReplayBuffer"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StopReplayBuffer</tt> request.
   # @see Mixins::Request#stop_replay_buffer
@@ -1268,6 +2045,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopreplaybuffer
   class StopReplayBuffer < Request
     TYPE = "StopReplayBuffer"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SaveReplayBuffer</tt> request.
   # @see Mixins::Request#save_replay_buffer
@@ -1275,6 +2056,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#savereplaybuffer
   class SaveReplayBuffer < Request
     TYPE = "SaveReplayBuffer"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetLastReplayBufferReplay</tt> request.
   # @see Mixins::Request#get_last_replay_buffer_replay
@@ -1282,6 +2067,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getlastreplaybufferreplay
   class GetLastReplayBufferReplay < Request
     TYPE = "GetLastReplayBufferReplay"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetRecordStatus</tt> request.
   # @see Mixins::Request#get_record_status
@@ -1289,6 +2078,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getrecordstatus
   class GetRecordStatus < Request
     TYPE = "GetRecordStatus"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ToggleRecord</tt> request.
   # @see Mixins::Request#toggle_record
@@ -1296,6 +2089,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglerecord
   class ToggleRecord < Request
     TYPE = "ToggleRecord"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StartRecord</tt> request.
   # @see Mixins::Request#start_record
@@ -1303,6 +2100,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startrecord
   class StartRecord < Request
     TYPE = "StartRecord"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StopRecord</tt> request.
   # @see Mixins::Request#stop_record
@@ -1310,6 +2111,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stoprecord
   class StopRecord < Request
     TYPE = "StopRecord"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ToggleRecordPause</tt> request.
   # @see Mixins::Request#toggle_record_pause
@@ -1317,6 +2122,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglerecordpause
   class ToggleRecordPause < Request
     TYPE = "ToggleRecordPause"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>PauseRecord</tt> request.
   # @see Mixins::Request#pause_record
@@ -1324,6 +2133,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#pauserecord
   class PauseRecord < Request
     TYPE = "PauseRecord"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ResumeRecord</tt> request.
   # @see Mixins::Request#resume_record
@@ -1331,6 +2144,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#resumerecord
   class ResumeRecord < Request
     TYPE = "ResumeRecord"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetSceneItemList</tt> request.
   # @see Mixins::Request#get_scene_item_list
@@ -1338,6 +2155,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemlist
   class GetSceneItemList < Request
     TYPE = "GetSceneItemList"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetGroupItemList</tt> request.
   # @see Mixins::Request#get_group_item_list
@@ -1345,6 +2171,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getgroupitemlist
   class GetGroupItemList < Request
     TYPE = "GetGroupItemList"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemId</tt> request.
   # @see Mixins::Request#get_scene_item_id
@@ -1352,6 +2187,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemid
   class GetSceneItemId < Request
     TYPE = "GetSceneItemId"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "searchOffset" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:search_offset])
+        rescue ConversionError => e
+          raise TypeError, "search_offset" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CreateSceneItem</tt> request.
   # @see Mixins::Request#create_scene_item
@@ -1359,6 +2213,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsceneitem
   class CreateSceneItem < Request
     TYPE = "CreateSceneItem"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "sceneItemEnabled" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:scene_item_enabled])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_enabled" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>RemoveSceneItem</tt> request.
   # @see Mixins::Request#remove_scene_item
@@ -1366,6 +2239,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesceneitem
   class RemoveSceneItem < Request
     TYPE = "RemoveSceneItem"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>DuplicateSceneItem</tt> request.
   # @see Mixins::Request#duplicate_scene_item
@@ -1373,6 +2260,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#duplicatesceneitem
   class DuplicateSceneItem < Request
     TYPE = "DuplicateSceneItem"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "destinationSceneName" => begin
+          TypeConverters::Optional[TypeConverters::String].as_json(args[:destination_scene_name])
+        rescue ConversionError => e
+          raise TypeError, "destination_scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemTransform</tt> request.
   # @see Mixins::Request#get_scene_item_transform
@@ -1380,6 +2286,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemtransform
   class GetSceneItemTransform < Request
     TYPE = "GetSceneItemTransform"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneItemTransform</tt> request.
   # @see Mixins::Request#set_scene_item_transform
@@ -1387,6 +2307,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemtransform
   class SetSceneItemTransform < Request
     TYPE = "SetSceneItemTransform"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "sceneItemTransform" => begin
+          TypeConverters::Object.as_json(args[:scene_item_transform])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_transform" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemEnabled</tt> request.
   # @see Mixins::Request#get_scene_item_enabled
@@ -1394,6 +2333,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemenabled
   class GetSceneItemEnabled < Request
     TYPE = "GetSceneItemEnabled"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneItemEnabled</tt> request.
   # @see Mixins::Request#set_scene_item_enabled
@@ -1401,6 +2354,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemenabled
   class SetSceneItemEnabled < Request
     TYPE = "SetSceneItemEnabled"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "sceneItemEnabled" => begin
+          TypeConverters::Boolean.as_json(args[:scene_item_enabled])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_enabled" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemLocked</tt> request.
   # @see Mixins::Request#get_scene_item_locked
@@ -1408,6 +2380,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemlocked
   class GetSceneItemLocked < Request
     TYPE = "GetSceneItemLocked"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneItemLocked</tt> request.
   # @see Mixins::Request#set_scene_item_locked
@@ -1415,6 +2401,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemlocked
   class SetSceneItemLocked < Request
     TYPE = "SetSceneItemLocked"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "sceneItemLocked" => begin
+          TypeConverters::Boolean.as_json(args[:scene_item_locked])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_locked" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemIndex</tt> request.
   # @see Mixins::Request#get_scene_item_index
@@ -1422,6 +2427,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemindex
   class GetSceneItemIndex < Request
     TYPE = "GetSceneItemIndex"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneItemIndex</tt> request.
   # @see Mixins::Request#set_scene_item_index
@@ -1429,6 +2448,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemindex
   class SetSceneItemIndex < Request
     TYPE = "SetSceneItemIndex"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "sceneItemIndex" => begin
+          TypeConverters::Number.as_json(args[:scene_item_index])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_index" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneItemBlendMode</tt> request.
   # @see Mixins::Request#get_scene_item_blend_mode
@@ -1436,6 +2474,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemblendmode
   class GetSceneItemBlendMode < Request
     TYPE = "GetSceneItemBlendMode"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneItemBlendMode</tt> request.
   # @see Mixins::Request#set_scene_item_blend_mode
@@ -1443,6 +2495,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemblendmode
   class SetSceneItemBlendMode < Request
     TYPE = "SetSceneItemBlendMode"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "sceneItemId" => begin
+          TypeConverters::Number.as_json(args[:scene_item_id])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_id" ": #{e.message}"
+        end,
+        "sceneItemBlendMode" => begin
+          TypeConverters::String.as_json(args[:scene_item_blend_mode])
+        rescue ConversionError => e
+          raise TypeError, "scene_item_blend_mode" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneList</tt> request.
   # @see Mixins::Request#get_scene_list
@@ -1450,6 +2521,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenelist
   class GetSceneList < Request
     TYPE = "GetSceneList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetGroupList</tt> request.
   # @see Mixins::Request#get_group_list
@@ -1457,6 +2532,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getgrouplist
   class GetGroupList < Request
     TYPE = "GetGroupList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetCurrentProgramScene</tt> request.
   # @see Mixins::Request#get_current_program_scene
@@ -1464,6 +2543,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentprogramscene
   class GetCurrentProgramScene < Request
     TYPE = "GetCurrentProgramScene"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetCurrentProgramScene</tt> request.
   # @see Mixins::Request#set_current_program_scene
@@ -1471,6 +2554,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentprogramscene
   class SetCurrentProgramScene < Request
     TYPE = "SetCurrentProgramScene"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetCurrentPreviewScene</tt> request.
   # @see Mixins::Request#get_current_preview_scene
@@ -1478,6 +2570,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentpreviewscene
   class GetCurrentPreviewScene < Request
     TYPE = "GetCurrentPreviewScene"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetCurrentPreviewScene</tt> request.
   # @see Mixins::Request#set_current_preview_scene
@@ -1485,6 +2581,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentpreviewscene
   class SetCurrentPreviewScene < Request
     TYPE = "SetCurrentPreviewScene"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>CreateScene</tt> request.
   # @see Mixins::Request#create_scene
@@ -1492,6 +2597,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscene
   class CreateScene < Request
     TYPE = "CreateScene"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>RemoveScene</tt> request.
   # @see Mixins::Request#remove_scene
@@ -1499,6 +2613,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removescene
   class RemoveScene < Request
     TYPE = "RemoveScene"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneName</tt> request.
   # @see Mixins::Request#set_scene_name
@@ -1506,6 +2629,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenename
   class SetSceneName < Request
     TYPE = "SetSceneName"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "newSceneName" => begin
+          TypeConverters::String.as_json(args[:new_scene_name])
+        rescue ConversionError => e
+          raise TypeError, "new_scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSceneSceneTransitionOverride</tt> request.
   # @see Mixins::Request#get_scene_scene_transition_override
@@ -1513,6 +2650,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenescenetransitionoverride
   class GetSceneSceneTransitionOverride < Request
     TYPE = "GetSceneSceneTransitionOverride"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetSceneSceneTransitionOverride</tt> request.
   # @see Mixins::Request#set_scene_scene_transition_override
@@ -1520,6 +2666,25 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenescenetransitionoverride
   class SetSceneSceneTransitionOverride < Request
     TYPE = "SetSceneSceneTransitionOverride"
+    def initialize(args)
+      super({
+        "sceneName" => begin
+          TypeConverters::String.as_json(args[:scene_name])
+        rescue ConversionError => e
+          raise TypeError, "scene_name" ": #{e.message}"
+        end,
+        "transitionName" => begin
+          TypeConverters::Optional[TypeConverters::String].as_json(args[:transition_name])
+        rescue ConversionError => e
+          raise TypeError, "transition_name" ": #{e.message}"
+        end,
+        "transitionDuration" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:transition_duration])
+        rescue ConversionError => e
+          raise TypeError, "transition_duration" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSourceActive</tt> request.
   # @see Mixins::Request#get_source_active
@@ -1527,6 +2692,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourceactive
   class GetSourceActive < Request
     TYPE = "GetSourceActive"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetSourceScreenshot</tt> request.
   # @see Mixins::Request#get_source_screenshot
@@ -1534,6 +2708,35 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcescreenshot
   class GetSourceScreenshot < Request
     TYPE = "GetSourceScreenshot"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "imageFormat" => begin
+          TypeConverters::String.as_json(args[:image_format])
+        rescue ConversionError => e
+          raise TypeError, "image_format" ": #{e.message}"
+        end,
+        "imageWidth" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_width])
+        rescue ConversionError => e
+          raise TypeError, "image_width" ": #{e.message}"
+        end,
+        "imageHeight" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_height])
+        rescue ConversionError => e
+          raise TypeError, "image_height" ": #{e.message}"
+        end,
+        "imageCompressionQuality" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_compression_quality])
+        rescue ConversionError => e
+          raise TypeError, "image_compression_quality" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SaveSourceScreenshot</tt> request.
   # @see Mixins::Request#save_source_screenshot
@@ -1541,6 +2744,40 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#savesourcescreenshot
   class SaveSourceScreenshot < Request
     TYPE = "SaveSourceScreenshot"
+    def initialize(args)
+      super({
+        "sourceName" => begin
+          TypeConverters::String.as_json(args[:source_name])
+        rescue ConversionError => e
+          raise TypeError, "source_name" ": #{e.message}"
+        end,
+        "imageFormat" => begin
+          TypeConverters::String.as_json(args[:image_format])
+        rescue ConversionError => e
+          raise TypeError, "image_format" ": #{e.message}"
+        end,
+        "imageFilePath" => begin
+          TypeConverters::String.as_json(args[:image_file_path])
+        rescue ConversionError => e
+          raise TypeError, "image_file_path" ": #{e.message}"
+        end,
+        "imageWidth" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_width])
+        rescue ConversionError => e
+          raise TypeError, "image_width" ": #{e.message}"
+        end,
+        "imageHeight" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_height])
+        rescue ConversionError => e
+          raise TypeError, "image_height" ": #{e.message}"
+        end,
+        "imageCompressionQuality" => begin
+          TypeConverters::Optional[TypeConverters::Number].as_json(args[:image_compression_quality])
+        rescue ConversionError => e
+          raise TypeError, "image_compression_quality" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetStreamStatus</tt> request.
   # @see Mixins::Request#get_stream_status
@@ -1548,6 +2785,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamstatus
   class GetStreamStatus < Request
     TYPE = "GetStreamStatus"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>ToggleStream</tt> request.
   # @see Mixins::Request#toggle_stream
@@ -1555,6 +2796,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglestream
   class ToggleStream < Request
     TYPE = "ToggleStream"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StartStream</tt> request.
   # @see Mixins::Request#start_stream
@@ -1562,6 +2807,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startstream
   class StartStream < Request
     TYPE = "StartStream"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>StopStream</tt> request.
   # @see Mixins::Request#stop_stream
@@ -1569,6 +2818,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopstream
   class StopStream < Request
     TYPE = "StopStream"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SendStreamCaption</tt> request.
   # @see Mixins::Request#send_stream_caption
@@ -1576,6 +2829,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#sendstreamcaption
   class SendStreamCaption < Request
     TYPE = "SendStreamCaption"
+    def initialize(args)
+      super({
+        "captionText" => begin
+          TypeConverters::String.as_json(args[:caption_text])
+        rescue ConversionError => e
+          raise TypeError, "caption_text" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetTransitionKindList</tt> request.
   # @see Mixins::Request#get_transition_kind_list
@@ -1583,6 +2845,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gettransitionkindlist
   class GetTransitionKindList < Request
     TYPE = "GetTransitionKindList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetSceneTransitionList</tt> request.
   # @see Mixins::Request#get_scene_transition_list
@@ -1590,6 +2856,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenetransitionlist
   class GetSceneTransitionList < Request
     TYPE = "GetSceneTransitionList"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>GetCurrentSceneTransition</tt> request.
   # @see Mixins::Request#get_current_scene_transition
@@ -1597,6 +2867,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentscenetransition
   class GetCurrentSceneTransition < Request
     TYPE = "GetCurrentSceneTransition"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetCurrentSceneTransition</tt> request.
   # @see Mixins::Request#set_current_scene_transition
@@ -1604,6 +2878,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransition
   class SetCurrentSceneTransition < Request
     TYPE = "SetCurrentSceneTransition"
+    def initialize(args)
+      super({
+        "transitionName" => begin
+          TypeConverters::String.as_json(args[:transition_name])
+        rescue ConversionError => e
+          raise TypeError, "transition_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetCurrentSceneTransitionDuration</tt> request.
   # @see Mixins::Request#set_current_scene_transition_duration
@@ -1611,6 +2894,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionduration
   class SetCurrentSceneTransitionDuration < Request
     TYPE = "SetCurrentSceneTransitionDuration"
+    def initialize(args)
+      super({
+        "transitionDuration" => begin
+          TypeConverters::Number.as_json(args[:transition_duration])
+        rescue ConversionError => e
+          raise TypeError, "transition_duration" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>SetCurrentSceneTransitionSettings</tt> request.
   # @see Mixins::Request#set_current_scene_transition_settings
@@ -1618,6 +2910,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionsettings
   class SetCurrentSceneTransitionSettings < Request
     TYPE = "SetCurrentSceneTransitionSettings"
+    def initialize(args)
+      super({
+        "transitionSettings" => begin
+          TypeConverters::Object.as_json(args[:transition_settings])
+        rescue ConversionError => e
+          raise TypeError, "transition_settings" ": #{e.message}"
+        end,
+        "overlay" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:overlay])
+        rescue ConversionError => e
+          raise TypeError, "overlay" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetCurrentSceneTransitionCursor</tt> request.
   # @see Mixins::Request#get_current_scene_transition_cursor
@@ -1625,6 +2931,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentscenetransitioncursor
   class GetCurrentSceneTransitionCursor < Request
     TYPE = "GetCurrentSceneTransitionCursor"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>TriggerStudioModeTransition</tt> request.
   # @see Mixins::Request#trigger_studio_mode_transition
@@ -1632,6 +2942,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerstudiomodetransition
   class TriggerStudioModeTransition < Request
     TYPE = "TriggerStudioModeTransition"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetTBarPosition</tt> request.
   # @see Mixins::Request#set_t_bar_position
@@ -1639,6 +2953,20 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#settbarposition
   class SetTBarPosition < Request
     TYPE = "SetTBarPosition"
+    def initialize(args)
+      super({
+        "position" => begin
+          TypeConverters::Number.as_json(args[:position])
+        rescue ConversionError => e
+          raise TypeError, "position" ": #{e.message}"
+        end,
+        "release" => begin
+          TypeConverters::Optional[TypeConverters::Boolean].as_json(args[:release])
+        rescue ConversionError => e
+          raise TypeError, "release" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetStudioModeEnabled</tt> request.
   # @see Mixins::Request#get_studio_mode_enabled
@@ -1646,6 +2974,10 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstudiomodeenabled
   class GetStudioModeEnabled < Request
     TYPE = "GetStudioModeEnabled"
+    def initialize(args)
+      super({
+      })
+    end
   end
   # An instance of <tt>SetStudioModeEnabled</tt> request.
   # @see Mixins::Request#set_studio_mode_enabled
@@ -1653,6 +2985,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setstudiomodeenabled
   class SetStudioModeEnabled < Request
     TYPE = "SetStudioModeEnabled"
+    def initialize(args)
+      super({
+        "studioModeEnabled" => begin
+          TypeConverters::Boolean.as_json(args[:studio_mode_enabled])
+        rescue ConversionError => e
+          raise TypeError, "studio_mode_enabled" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>OpenInputPropertiesDialog</tt> request.
   # @see Mixins::Request#open_input_properties_dialog
@@ -1660,6 +3001,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputpropertiesdialog
   class OpenInputPropertiesDialog < Request
     TYPE = "OpenInputPropertiesDialog"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>OpenInputFiltersDialog</tt> request.
   # @see Mixins::Request#open_input_filters_dialog
@@ -1667,6 +3017,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputfiltersdialog
   class OpenInputFiltersDialog < Request
     TYPE = "OpenInputFiltersDialog"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>OpenInputInteractDialog</tt> request.
   # @see Mixins::Request#open_input_interact_dialog
@@ -1674,6 +3033,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputinteractdialog
   class OpenInputInteractDialog < Request
     TYPE = "OpenInputInteractDialog"
+    def initialize(args)
+      super({
+        "inputName" => begin
+          TypeConverters::String.as_json(args[:input_name])
+        rescue ConversionError => e
+          raise TypeError, "input_name" ": #{e.message}"
+        end,
+      })
+    end
   end
   # An instance of <tt>GetMonitorList</tt> request.
   # @see Mixins::Request#get_monitor_list
@@ -1681,11 +3049,15 @@ module Requests
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmonitorlist
   class GetMonitorList < Request
     TYPE = "GetMonitorList"
+    def initialize(args)
+      super({
+      })
+    end
   end
 end  # module Requests
 module Responses
   # A response to <tt>GetPersistentData</tt> request.
-  # @see Requests::GetPersistentData
+  # @see Mixins::Request#get_persistent_data
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getpersistentdata
   class GetPersistentData < Response
     # @!attribute [r] slot_value
@@ -1694,13 +3066,13 @@ module Responses
     Requests::GetPersistentData::Response = Responses::GetPersistentData
   end
   # A response to <tt>SetPersistentData</tt> request.
-  # @see Requests::SetPersistentData
+  # @see Mixins::Request#set_persistent_data
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setpersistentdata
   class SetPersistentData < Response
     Requests::SetPersistentData::Response = Responses::SetPersistentData
   end
   # A response to <tt>GetSceneCollectionList</tt> request.
-  # @see Requests::GetSceneCollectionList
+  # @see Mixins::Request#get_scene_collection_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenecollectionlist
   class GetSceneCollectionList < Response
     # @!attribute [r] current_scene_collection_name
@@ -1712,19 +3084,19 @@ module Responses
     Requests::GetSceneCollectionList::Response = Responses::GetSceneCollectionList
   end
   # A response to <tt>SetCurrentSceneCollection</tt> request.
-  # @see Requests::SetCurrentSceneCollection
+  # @see Mixins::Request#set_current_scene_collection
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenecollection
   class SetCurrentSceneCollection < Response
     Requests::SetCurrentSceneCollection::Response = Responses::SetCurrentSceneCollection
   end
   # A response to <tt>CreateSceneCollection</tt> request.
-  # @see Requests::CreateSceneCollection
+  # @see Mixins::Request#create_scene_collection
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscenecollection
   class CreateSceneCollection < Response
     Requests::CreateSceneCollection::Response = Responses::CreateSceneCollection
   end
   # A response to <tt>GetProfileList</tt> request.
-  # @see Requests::GetProfileList
+  # @see Mixins::Request#get_profile_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofilelist
   class GetProfileList < Response
     # @!attribute [r] current_profile_name
@@ -1736,25 +3108,25 @@ module Responses
     Requests::GetProfileList::Response = Responses::GetProfileList
   end
   # A response to <tt>SetCurrentProfile</tt> request.
-  # @see Requests::SetCurrentProfile
+  # @see Mixins::Request#set_current_profile
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentprofile
   class SetCurrentProfile < Response
     Requests::SetCurrentProfile::Response = Responses::SetCurrentProfile
   end
   # A response to <tt>CreateProfile</tt> request.
-  # @see Requests::CreateProfile
+  # @see Mixins::Request#create_profile
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createprofile
   class CreateProfile < Response
     Requests::CreateProfile::Response = Responses::CreateProfile
   end
   # A response to <tt>RemoveProfile</tt> request.
-  # @see Requests::RemoveProfile
+  # @see Mixins::Request#remove_profile
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeprofile
   class RemoveProfile < Response
     Requests::RemoveProfile::Response = Responses::RemoveProfile
   end
   # A response to <tt>GetProfileParameter</tt> request.
-  # @see Requests::GetProfileParameter
+  # @see Mixins::Request#get_profile_parameter
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofileparameter
   class GetProfileParameter < Response
     # @!attribute [r] parameter_value
@@ -1766,13 +3138,13 @@ module Responses
     Requests::GetProfileParameter::Response = Responses::GetProfileParameter
   end
   # A response to <tt>SetProfileParameter</tt> request.
-  # @see Requests::SetProfileParameter
+  # @see Mixins::Request#set_profile_parameter
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setprofileparameter
   class SetProfileParameter < Response
     Requests::SetProfileParameter::Response = Responses::SetProfileParameter
   end
   # A response to <tt>GetVideoSettings</tt> request.
-  # @see Requests::GetVideoSettings
+  # @see Mixins::Request#get_video_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvideosettings
   class GetVideoSettings < Response
     # @!attribute [r] fps_numerator
@@ -1796,13 +3168,13 @@ module Responses
     Requests::GetVideoSettings::Response = Responses::GetVideoSettings
   end
   # A response to <tt>SetVideoSettings</tt> request.
-  # @see Requests::SetVideoSettings
+  # @see Mixins::Request#set_video_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setvideosettings
   class SetVideoSettings < Response
     Requests::SetVideoSettings::Response = Responses::SetVideoSettings
   end
   # A response to <tt>GetStreamServiceSettings</tt> request.
-  # @see Requests::GetStreamServiceSettings
+  # @see Mixins::Request#get_stream_service_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamservicesettings
   class GetStreamServiceSettings < Response
     # @!attribute [r] stream_service_type
@@ -1814,13 +3186,13 @@ module Responses
     Requests::GetStreamServiceSettings::Response = Responses::GetStreamServiceSettings
   end
   # A response to <tt>SetStreamServiceSettings</tt> request.
-  # @see Requests::SetStreamServiceSettings
+  # @see Mixins::Request#set_stream_service_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setstreamservicesettings
   class SetStreamServiceSettings < Response
     Requests::SetStreamServiceSettings::Response = Responses::SetStreamServiceSettings
   end
   # A response to <tt>GetRecordDirectory</tt> request.
-  # @see Requests::GetRecordDirectory
+  # @see Mixins::Request#get_record_directory
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getrecorddirectory
   class GetRecordDirectory < Response
     # @!attribute [r] record_directory
@@ -1829,7 +3201,7 @@ module Responses
     Requests::GetRecordDirectory::Response = Responses::GetRecordDirectory
   end
   # A response to <tt>GetSourceFilterList</tt> request.
-  # @see Requests::GetSourceFilterList
+  # @see Mixins::Request#get_source_filter_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilterlist
   class GetSourceFilterList < Response
     # @!attribute [r] filters
@@ -1838,7 +3210,7 @@ module Responses
     Requests::GetSourceFilterList::Response = Responses::GetSourceFilterList
   end
   # A response to <tt>GetSourceFilterDefaultSettings</tt> request.
-  # @see Requests::GetSourceFilterDefaultSettings
+  # @see Mixins::Request#get_source_filter_default_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilterdefaultsettings
   class GetSourceFilterDefaultSettings < Response
     # @!attribute [r] default_filter_settings
@@ -1847,25 +3219,25 @@ module Responses
     Requests::GetSourceFilterDefaultSettings::Response = Responses::GetSourceFilterDefaultSettings
   end
   # A response to <tt>CreateSourceFilter</tt> request.
-  # @see Requests::CreateSourceFilter
+  # @see Mixins::Request#create_source_filter
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsourcefilter
   class CreateSourceFilter < Response
     Requests::CreateSourceFilter::Response = Responses::CreateSourceFilter
   end
   # A response to <tt>RemoveSourceFilter</tt> request.
-  # @see Requests::RemoveSourceFilter
+  # @see Mixins::Request#remove_source_filter
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesourcefilter
   class RemoveSourceFilter < Response
     Requests::RemoveSourceFilter::Response = Responses::RemoveSourceFilter
   end
   # A response to <tt>SetSourceFilterName</tt> request.
-  # @see Requests::SetSourceFilterName
+  # @see Mixins::Request#set_source_filter_name
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltername
   class SetSourceFilterName < Response
     Requests::SetSourceFilterName::Response = Responses::SetSourceFilterName
   end
   # A response to <tt>GetSourceFilter</tt> request.
-  # @see Requests::GetSourceFilter
+  # @see Mixins::Request#get_source_filter
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilter
   class GetSourceFilter < Response
     # @!attribute [r] filter_enabled
@@ -1883,25 +3255,25 @@ module Responses
     Requests::GetSourceFilter::Response = Responses::GetSourceFilter
   end
   # A response to <tt>SetSourceFilterIndex</tt> request.
-  # @see Requests::SetSourceFilterIndex
+  # @see Mixins::Request#set_source_filter_index
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterindex
   class SetSourceFilterIndex < Response
     Requests::SetSourceFilterIndex::Response = Responses::SetSourceFilterIndex
   end
   # A response to <tt>SetSourceFilterSettings</tt> request.
-  # @see Requests::SetSourceFilterSettings
+  # @see Mixins::Request#set_source_filter_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltersettings
   class SetSourceFilterSettings < Response
     Requests::SetSourceFilterSettings::Response = Responses::SetSourceFilterSettings
   end
   # A response to <tt>SetSourceFilterEnabled</tt> request.
-  # @see Requests::SetSourceFilterEnabled
+  # @see Mixins::Request#set_source_filter_enabled
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterenabled
   class SetSourceFilterEnabled < Response
     Requests::SetSourceFilterEnabled::Response = Responses::SetSourceFilterEnabled
   end
   # A response to <tt>GetVersion</tt> request.
-  # @see Requests::GetVersion
+  # @see Mixins::Request#get_version
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getversion
   class GetVersion < Response
     # @!attribute [r] obs_version
@@ -1928,7 +3300,7 @@ module Responses
     Requests::GetVersion::Response = Responses::GetVersion
   end
   # A response to <tt>GetStats</tt> request.
-  # @see Requests::GetStats
+  # @see Mixins::Request#get_stats
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstats
   class GetStats < Response
     # @!attribute [r] cpu_usage
@@ -1967,13 +3339,13 @@ module Responses
     Requests::GetStats::Response = Responses::GetStats
   end
   # A response to <tt>BroadcastCustomEvent</tt> request.
-  # @see Requests::BroadcastCustomEvent
+  # @see Mixins::Request#broadcast_custom_event
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#broadcastcustomevent
   class BroadcastCustomEvent < Response
     Requests::BroadcastCustomEvent::Response = Responses::BroadcastCustomEvent
   end
   # A response to <tt>CallVendorRequest</tt> request.
-  # @see Requests::CallVendorRequest
+  # @see Mixins::Request#call_vendor_request
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#callvendorrequest
   class CallVendorRequest < Response
     # @!attribute [r] response_data
@@ -1982,7 +3354,7 @@ module Responses
     Requests::CallVendorRequest::Response = Responses::CallVendorRequest
   end
   # A response to <tt>GetHotkeyList</tt> request.
-  # @see Requests::GetHotkeyList
+  # @see Mixins::Request#get_hotkey_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gethotkeylist
   class GetHotkeyList < Response
     # @!attribute [r] hotkeys
@@ -1991,25 +3363,25 @@ module Responses
     Requests::GetHotkeyList::Response = Responses::GetHotkeyList
   end
   # A response to <tt>TriggerHotkeyByName</tt> request.
-  # @see Requests::TriggerHotkeyByName
+  # @see Mixins::Request#trigger_hotkey_by_name
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerhotkeybyname
   class TriggerHotkeyByName < Response
     Requests::TriggerHotkeyByName::Response = Responses::TriggerHotkeyByName
   end
   # A response to <tt>TriggerHotkeyByKeySequence</tt> request.
-  # @see Requests::TriggerHotkeyByKeySequence
+  # @see Mixins::Request#trigger_hotkey_by_key_sequence
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerhotkeybykeysequence
   class TriggerHotkeyByKeySequence < Response
     Requests::TriggerHotkeyByKeySequence::Response = Responses::TriggerHotkeyByKeySequence
   end
   # A response to <tt>Sleep</tt> request.
-  # @see Requests::Sleep
+  # @see Mixins::Request#sleep
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#sleep
   class Sleep < Response
     Requests::Sleep::Response = Responses::Sleep
   end
   # A response to <tt>GetInputList</tt> request.
-  # @see Requests::GetInputList
+  # @see Mixins::Request#get_input_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputlist
   class GetInputList < Response
     # @!attribute [r] inputs
@@ -2018,7 +3390,7 @@ module Responses
     Requests::GetInputList::Response = Responses::GetInputList
   end
   # A response to <tt>GetInputKindList</tt> request.
-  # @see Requests::GetInputKindList
+  # @see Mixins::Request#get_input_kind_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputkindlist
   class GetInputKindList < Response
     # @!attribute [r] input_kinds
@@ -2027,7 +3399,7 @@ module Responses
     Requests::GetInputKindList::Response = Responses::GetInputKindList
   end
   # A response to <tt>GetSpecialInputs</tt> request.
-  # @see Requests::GetSpecialInputs
+  # @see Mixins::Request#get_special_inputs
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getspecialinputs
   class GetSpecialInputs < Response
     # @!attribute [r] desktop1
@@ -2051,7 +3423,7 @@ module Responses
     Requests::GetSpecialInputs::Response = Responses::GetSpecialInputs
   end
   # A response to <tt>CreateInput</tt> request.
-  # @see Requests::CreateInput
+  # @see Mixins::Request#create_input
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createinput
   class CreateInput < Response
     # @!attribute [r] scene_item_id
@@ -2060,19 +3432,19 @@ module Responses
     Requests::CreateInput::Response = Responses::CreateInput
   end
   # A response to <tt>RemoveInput</tt> request.
-  # @see Requests::RemoveInput
+  # @see Mixins::Request#remove_input
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeinput
   class RemoveInput < Response
     Requests::RemoveInput::Response = Responses::RemoveInput
   end
   # A response to <tt>SetInputName</tt> request.
-  # @see Requests::SetInputName
+  # @see Mixins::Request#set_input_name
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputname
   class SetInputName < Response
     Requests::SetInputName::Response = Responses::SetInputName
   end
   # A response to <tt>GetInputDefaultSettings</tt> request.
-  # @see Requests::GetInputDefaultSettings
+  # @see Mixins::Request#get_input_default_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputdefaultsettings
   class GetInputDefaultSettings < Response
     # @!attribute [r] default_input_settings
@@ -2081,7 +3453,7 @@ module Responses
     Requests::GetInputDefaultSettings::Response = Responses::GetInputDefaultSettings
   end
   # A response to <tt>GetInputSettings</tt> request.
-  # @see Requests::GetInputSettings
+  # @see Mixins::Request#get_input_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputsettings
   class GetInputSettings < Response
     # @!attribute [r] input_settings
@@ -2093,13 +3465,13 @@ module Responses
     Requests::GetInputSettings::Response = Responses::GetInputSettings
   end
   # A response to <tt>SetInputSettings</tt> request.
-  # @see Requests::SetInputSettings
+  # @see Mixins::Request#set_input_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputsettings
   class SetInputSettings < Response
     Requests::SetInputSettings::Response = Responses::SetInputSettings
   end
   # A response to <tt>GetInputMute</tt> request.
-  # @see Requests::GetInputMute
+  # @see Mixins::Request#get_input_mute
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputmute
   class GetInputMute < Response
     # @!attribute [r] input_muted
@@ -2108,13 +3480,13 @@ module Responses
     Requests::GetInputMute::Response = Responses::GetInputMute
   end
   # A response to <tt>SetInputMute</tt> request.
-  # @see Requests::SetInputMute
+  # @see Mixins::Request#set_input_mute
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputmute
   class SetInputMute < Response
     Requests::SetInputMute::Response = Responses::SetInputMute
   end
   # A response to <tt>ToggleInputMute</tt> request.
-  # @see Requests::ToggleInputMute
+  # @see Mixins::Request#toggle_input_mute
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#toggleinputmute
   class ToggleInputMute < Response
     # @!attribute [r] input_muted
@@ -2123,7 +3495,7 @@ module Responses
     Requests::ToggleInputMute::Response = Responses::ToggleInputMute
   end
   # A response to <tt>GetInputVolume</tt> request.
-  # @see Requests::GetInputVolume
+  # @see Mixins::Request#get_input_volume
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputvolume
   class GetInputVolume < Response
     # @!attribute [r] input_volume_mul
@@ -2135,13 +3507,13 @@ module Responses
     Requests::GetInputVolume::Response = Responses::GetInputVolume
   end
   # A response to <tt>SetInputVolume</tt> request.
-  # @see Requests::SetInputVolume
+  # @see Mixins::Request#set_input_volume
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputvolume
   class SetInputVolume < Response
     Requests::SetInputVolume::Response = Responses::SetInputVolume
   end
   # A response to <tt>GetInputAudioBalance</tt> request.
-  # @see Requests::GetInputAudioBalance
+  # @see Mixins::Request#get_input_audio_balance
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiobalance
   class GetInputAudioBalance < Response
     # @!attribute [r] input_audio_balance
@@ -2150,13 +3522,13 @@ module Responses
     Requests::GetInputAudioBalance::Response = Responses::GetInputAudioBalance
   end
   # A response to <tt>SetInputAudioBalance</tt> request.
-  # @see Requests::SetInputAudioBalance
+  # @see Mixins::Request#set_input_audio_balance
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiobalance
   class SetInputAudioBalance < Response
     Requests::SetInputAudioBalance::Response = Responses::SetInputAudioBalance
   end
   # A response to <tt>GetInputAudioSyncOffset</tt> request.
-  # @see Requests::GetInputAudioSyncOffset
+  # @see Mixins::Request#get_input_audio_sync_offset
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiosyncoffset
   class GetInputAudioSyncOffset < Response
     # @!attribute [r] input_audio_sync_offset
@@ -2165,13 +3537,13 @@ module Responses
     Requests::GetInputAudioSyncOffset::Response = Responses::GetInputAudioSyncOffset
   end
   # A response to <tt>SetInputAudioSyncOffset</tt> request.
-  # @see Requests::SetInputAudioSyncOffset
+  # @see Mixins::Request#set_input_audio_sync_offset
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiosyncoffset
   class SetInputAudioSyncOffset < Response
     Requests::SetInputAudioSyncOffset::Response = Responses::SetInputAudioSyncOffset
   end
   # A response to <tt>GetInputAudioMonitorType</tt> request.
-  # @see Requests::GetInputAudioMonitorType
+  # @see Mixins::Request#get_input_audio_monitor_type
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiomonitortype
   class GetInputAudioMonitorType < Response
     # @!attribute [r] monitor_type
@@ -2180,13 +3552,13 @@ module Responses
     Requests::GetInputAudioMonitorType::Response = Responses::GetInputAudioMonitorType
   end
   # A response to <tt>SetInputAudioMonitorType</tt> request.
-  # @see Requests::SetInputAudioMonitorType
+  # @see Mixins::Request#set_input_audio_monitor_type
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiomonitortype
   class SetInputAudioMonitorType < Response
     Requests::SetInputAudioMonitorType::Response = Responses::SetInputAudioMonitorType
   end
   # A response to <tt>GetInputAudioTracks</tt> request.
-  # @see Requests::GetInputAudioTracks
+  # @see Mixins::Request#get_input_audio_tracks
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiotracks
   class GetInputAudioTracks < Response
     # @!attribute [r] input_audio_tracks
@@ -2195,13 +3567,13 @@ module Responses
     Requests::GetInputAudioTracks::Response = Responses::GetInputAudioTracks
   end
   # A response to <tt>SetInputAudioTracks</tt> request.
-  # @see Requests::SetInputAudioTracks
+  # @see Mixins::Request#set_input_audio_tracks
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiotracks
   class SetInputAudioTracks < Response
     Requests::SetInputAudioTracks::Response = Responses::SetInputAudioTracks
   end
   # A response to <tt>GetInputPropertiesListPropertyItems</tt> request.
-  # @see Requests::GetInputPropertiesListPropertyItems
+  # @see Mixins::Request#get_input_properties_list_property_items
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputpropertieslistpropertyitems
   class GetInputPropertiesListPropertyItems < Response
     # @!attribute [r] property_items
@@ -2210,13 +3582,13 @@ module Responses
     Requests::GetInputPropertiesListPropertyItems::Response = Responses::GetInputPropertiesListPropertyItems
   end
   # A response to <tt>PressInputPropertiesButton</tt> request.
-  # @see Requests::PressInputPropertiesButton
+  # @see Mixins::Request#press_input_properties_button
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#pressinputpropertiesbutton
   class PressInputPropertiesButton < Response
     Requests::PressInputPropertiesButton::Response = Responses::PressInputPropertiesButton
   end
   # A response to <tt>GetMediaInputStatus</tt> request.
-  # @see Requests::GetMediaInputStatus
+  # @see Mixins::Request#get_media_input_status
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmediainputstatus
   class GetMediaInputStatus < Response
     # @!attribute [r] media_state
@@ -2231,25 +3603,25 @@ module Responses
     Requests::GetMediaInputStatus::Response = Responses::GetMediaInputStatus
   end
   # A response to <tt>SetMediaInputCursor</tt> request.
-  # @see Requests::SetMediaInputCursor
+  # @see Mixins::Request#set_media_input_cursor
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setmediainputcursor
   class SetMediaInputCursor < Response
     Requests::SetMediaInputCursor::Response = Responses::SetMediaInputCursor
   end
   # A response to <tt>OffsetMediaInputCursor</tt> request.
-  # @see Requests::OffsetMediaInputCursor
+  # @see Mixins::Request#offset_media_input_cursor
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#offsetmediainputcursor
   class OffsetMediaInputCursor < Response
     Requests::OffsetMediaInputCursor::Response = Responses::OffsetMediaInputCursor
   end
   # A response to <tt>TriggerMediaInputAction</tt> request.
-  # @see Requests::TriggerMediaInputAction
+  # @see Mixins::Request#trigger_media_input_action
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggermediainputaction
   class TriggerMediaInputAction < Response
     Requests::TriggerMediaInputAction::Response = Responses::TriggerMediaInputAction
   end
   # A response to <tt>GetVirtualCamStatus</tt> request.
-  # @see Requests::GetVirtualCamStatus
+  # @see Mixins::Request#get_virtual_cam_status
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvirtualcamstatus
   class GetVirtualCamStatus < Response
     # @!attribute [r] output_active
@@ -2258,7 +3630,7 @@ module Responses
     Requests::GetVirtualCamStatus::Response = Responses::GetVirtualCamStatus
   end
   # A response to <tt>ToggleVirtualCam</tt> request.
-  # @see Requests::ToggleVirtualCam
+  # @see Mixins::Request#toggle_virtual_cam
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglevirtualcam
   class ToggleVirtualCam < Response
     # @!attribute [r] output_active
@@ -2267,19 +3639,19 @@ module Responses
     Requests::ToggleVirtualCam::Response = Responses::ToggleVirtualCam
   end
   # A response to <tt>StartVirtualCam</tt> request.
-  # @see Requests::StartVirtualCam
+  # @see Mixins::Request#start_virtual_cam
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startvirtualcam
   class StartVirtualCam < Response
     Requests::StartVirtualCam::Response = Responses::StartVirtualCam
   end
   # A response to <tt>StopVirtualCam</tt> request.
-  # @see Requests::StopVirtualCam
+  # @see Mixins::Request#stop_virtual_cam
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopvirtualcam
   class StopVirtualCam < Response
     Requests::StopVirtualCam::Response = Responses::StopVirtualCam
   end
   # A response to <tt>GetReplayBufferStatus</tt> request.
-  # @see Requests::GetReplayBufferStatus
+  # @see Mixins::Request#get_replay_buffer_status
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getreplaybufferstatus
   class GetReplayBufferStatus < Response
     # @!attribute [r] output_active
@@ -2288,7 +3660,7 @@ module Responses
     Requests::GetReplayBufferStatus::Response = Responses::GetReplayBufferStatus
   end
   # A response to <tt>ToggleReplayBuffer</tt> request.
-  # @see Requests::ToggleReplayBuffer
+  # @see Mixins::Request#toggle_replay_buffer
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglereplaybuffer
   class ToggleReplayBuffer < Response
     # @!attribute [r] output_active
@@ -2297,25 +3669,25 @@ module Responses
     Requests::ToggleReplayBuffer::Response = Responses::ToggleReplayBuffer
   end
   # A response to <tt>StartReplayBuffer</tt> request.
-  # @see Requests::StartReplayBuffer
+  # @see Mixins::Request#start_replay_buffer
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startreplaybuffer
   class StartReplayBuffer < Response
     Requests::StartReplayBuffer::Response = Responses::StartReplayBuffer
   end
   # A response to <tt>StopReplayBuffer</tt> request.
-  # @see Requests::StopReplayBuffer
+  # @see Mixins::Request#stop_replay_buffer
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopreplaybuffer
   class StopReplayBuffer < Response
     Requests::StopReplayBuffer::Response = Responses::StopReplayBuffer
   end
   # A response to <tt>SaveReplayBuffer</tt> request.
-  # @see Requests::SaveReplayBuffer
+  # @see Mixins::Request#save_replay_buffer
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#savereplaybuffer
   class SaveReplayBuffer < Response
     Requests::SaveReplayBuffer::Response = Responses::SaveReplayBuffer
   end
   # A response to <tt>GetLastReplayBufferReplay</tt> request.
-  # @see Requests::GetLastReplayBufferReplay
+  # @see Mixins::Request#get_last_replay_buffer_replay
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getlastreplaybufferreplay
   class GetLastReplayBufferReplay < Response
     # @!attribute [r] saved_replay_path
@@ -2324,7 +3696,7 @@ module Responses
     Requests::GetLastReplayBufferReplay::Response = Responses::GetLastReplayBufferReplay
   end
   # A response to <tt>GetRecordStatus</tt> request.
-  # @see Requests::GetRecordStatus
+  # @see Mixins::Request#get_record_status
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getrecordstatus
   class GetRecordStatus < Response
     # @!attribute [r] output_active
@@ -2345,43 +3717,43 @@ module Responses
     Requests::GetRecordStatus::Response = Responses::GetRecordStatus
   end
   # A response to <tt>ToggleRecord</tt> request.
-  # @see Requests::ToggleRecord
+  # @see Mixins::Request#toggle_record
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglerecord
   class ToggleRecord < Response
     Requests::ToggleRecord::Response = Responses::ToggleRecord
   end
   # A response to <tt>StartRecord</tt> request.
-  # @see Requests::StartRecord
+  # @see Mixins::Request#start_record
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startrecord
   class StartRecord < Response
     Requests::StartRecord::Response = Responses::StartRecord
   end
   # A response to <tt>StopRecord</tt> request.
-  # @see Requests::StopRecord
+  # @see Mixins::Request#stop_record
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stoprecord
   class StopRecord < Response
     Requests::StopRecord::Response = Responses::StopRecord
   end
   # A response to <tt>ToggleRecordPause</tt> request.
-  # @see Requests::ToggleRecordPause
+  # @see Mixins::Request#toggle_record_pause
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglerecordpause
   class ToggleRecordPause < Response
     Requests::ToggleRecordPause::Response = Responses::ToggleRecordPause
   end
   # A response to <tt>PauseRecord</tt> request.
-  # @see Requests::PauseRecord
+  # @see Mixins::Request#pause_record
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#pauserecord
   class PauseRecord < Response
     Requests::PauseRecord::Response = Responses::PauseRecord
   end
   # A response to <tt>ResumeRecord</tt> request.
-  # @see Requests::ResumeRecord
+  # @see Mixins::Request#resume_record
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#resumerecord
   class ResumeRecord < Response
     Requests::ResumeRecord::Response = Responses::ResumeRecord
   end
   # A response to <tt>GetSceneItemList</tt> request.
-  # @see Requests::GetSceneItemList
+  # @see Mixins::Request#get_scene_item_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemlist
   class GetSceneItemList < Response
     # @!attribute [r] scene_items
@@ -2390,7 +3762,7 @@ module Responses
     Requests::GetSceneItemList::Response = Responses::GetSceneItemList
   end
   # A response to <tt>GetGroupItemList</tt> request.
-  # @see Requests::GetGroupItemList
+  # @see Mixins::Request#get_group_item_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getgroupitemlist
   class GetGroupItemList < Response
     # @!attribute [r] scene_items
@@ -2399,7 +3771,7 @@ module Responses
     Requests::GetGroupItemList::Response = Responses::GetGroupItemList
   end
   # A response to <tt>GetSceneItemId</tt> request.
-  # @see Requests::GetSceneItemId
+  # @see Mixins::Request#get_scene_item_id
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemid
   class GetSceneItemId < Response
     # @!attribute [r] scene_item_id
@@ -2408,7 +3780,7 @@ module Responses
     Requests::GetSceneItemId::Response = Responses::GetSceneItemId
   end
   # A response to <tt>CreateSceneItem</tt> request.
-  # @see Requests::CreateSceneItem
+  # @see Mixins::Request#create_scene_item
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsceneitem
   class CreateSceneItem < Response
     # @!attribute [r] scene_item_id
@@ -2417,13 +3789,13 @@ module Responses
     Requests::CreateSceneItem::Response = Responses::CreateSceneItem
   end
   # A response to <tt>RemoveSceneItem</tt> request.
-  # @see Requests::RemoveSceneItem
+  # @see Mixins::Request#remove_scene_item
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesceneitem
   class RemoveSceneItem < Response
     Requests::RemoveSceneItem::Response = Responses::RemoveSceneItem
   end
   # A response to <tt>DuplicateSceneItem</tt> request.
-  # @see Requests::DuplicateSceneItem
+  # @see Mixins::Request#duplicate_scene_item
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#duplicatesceneitem
   class DuplicateSceneItem < Response
     # @!attribute [r] scene_item_id
@@ -2432,7 +3804,7 @@ module Responses
     Requests::DuplicateSceneItem::Response = Responses::DuplicateSceneItem
   end
   # A response to <tt>GetSceneItemTransform</tt> request.
-  # @see Requests::GetSceneItemTransform
+  # @see Mixins::Request#get_scene_item_transform
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemtransform
   class GetSceneItemTransform < Response
     # @!attribute [r] scene_item_transform
@@ -2441,13 +3813,13 @@ module Responses
     Requests::GetSceneItemTransform::Response = Responses::GetSceneItemTransform
   end
   # A response to <tt>SetSceneItemTransform</tt> request.
-  # @see Requests::SetSceneItemTransform
+  # @see Mixins::Request#set_scene_item_transform
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemtransform
   class SetSceneItemTransform < Response
     Requests::SetSceneItemTransform::Response = Responses::SetSceneItemTransform
   end
   # A response to <tt>GetSceneItemEnabled</tt> request.
-  # @see Requests::GetSceneItemEnabled
+  # @see Mixins::Request#get_scene_item_enabled
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemenabled
   class GetSceneItemEnabled < Response
     # @!attribute [r] scene_item_enabled
@@ -2456,13 +3828,13 @@ module Responses
     Requests::GetSceneItemEnabled::Response = Responses::GetSceneItemEnabled
   end
   # A response to <tt>SetSceneItemEnabled</tt> request.
-  # @see Requests::SetSceneItemEnabled
+  # @see Mixins::Request#set_scene_item_enabled
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemenabled
   class SetSceneItemEnabled < Response
     Requests::SetSceneItemEnabled::Response = Responses::SetSceneItemEnabled
   end
   # A response to <tt>GetSceneItemLocked</tt> request.
-  # @see Requests::GetSceneItemLocked
+  # @see Mixins::Request#get_scene_item_locked
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemlocked
   class GetSceneItemLocked < Response
     # @!attribute [r] scene_item_locked
@@ -2471,13 +3843,13 @@ module Responses
     Requests::GetSceneItemLocked::Response = Responses::GetSceneItemLocked
   end
   # A response to <tt>SetSceneItemLocked</tt> request.
-  # @see Requests::SetSceneItemLocked
+  # @see Mixins::Request#set_scene_item_locked
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemlocked
   class SetSceneItemLocked < Response
     Requests::SetSceneItemLocked::Response = Responses::SetSceneItemLocked
   end
   # A response to <tt>GetSceneItemIndex</tt> request.
-  # @see Requests::GetSceneItemIndex
+  # @see Mixins::Request#get_scene_item_index
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemindex
   class GetSceneItemIndex < Response
     # @!attribute [r] scene_item_index
@@ -2486,13 +3858,13 @@ module Responses
     Requests::GetSceneItemIndex::Response = Responses::GetSceneItemIndex
   end
   # A response to <tt>SetSceneItemIndex</tt> request.
-  # @see Requests::SetSceneItemIndex
+  # @see Mixins::Request#set_scene_item_index
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemindex
   class SetSceneItemIndex < Response
     Requests::SetSceneItemIndex::Response = Responses::SetSceneItemIndex
   end
   # A response to <tt>GetSceneItemBlendMode</tt> request.
-  # @see Requests::GetSceneItemBlendMode
+  # @see Mixins::Request#get_scene_item_blend_mode
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemblendmode
   class GetSceneItemBlendMode < Response
     # @!attribute [r] scene_item_blend_mode
@@ -2501,13 +3873,13 @@ module Responses
     Requests::GetSceneItemBlendMode::Response = Responses::GetSceneItemBlendMode
   end
   # A response to <tt>SetSceneItemBlendMode</tt> request.
-  # @see Requests::SetSceneItemBlendMode
+  # @see Mixins::Request#set_scene_item_blend_mode
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemblendmode
   class SetSceneItemBlendMode < Response
     Requests::SetSceneItemBlendMode::Response = Responses::SetSceneItemBlendMode
   end
   # A response to <tt>GetSceneList</tt> request.
-  # @see Requests::GetSceneList
+  # @see Mixins::Request#get_scene_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenelist
   class GetSceneList < Response
     # @!attribute [r] current_program_scene_name
@@ -2522,7 +3894,7 @@ module Responses
     Requests::GetSceneList::Response = Responses::GetSceneList
   end
   # A response to <tt>GetGroupList</tt> request.
-  # @see Requests::GetGroupList
+  # @see Mixins::Request#get_group_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getgrouplist
   class GetGroupList < Response
     # @!attribute [r] groups
@@ -2531,7 +3903,7 @@ module Responses
     Requests::GetGroupList::Response = Responses::GetGroupList
   end
   # A response to <tt>GetCurrentProgramScene</tt> request.
-  # @see Requests::GetCurrentProgramScene
+  # @see Mixins::Request#get_current_program_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentprogramscene
   class GetCurrentProgramScene < Response
     # @!attribute [r] current_program_scene_name
@@ -2540,13 +3912,13 @@ module Responses
     Requests::GetCurrentProgramScene::Response = Responses::GetCurrentProgramScene
   end
   # A response to <tt>SetCurrentProgramScene</tt> request.
-  # @see Requests::SetCurrentProgramScene
+  # @see Mixins::Request#set_current_program_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentprogramscene
   class SetCurrentProgramScene < Response
     Requests::SetCurrentProgramScene::Response = Responses::SetCurrentProgramScene
   end
   # A response to <tt>GetCurrentPreviewScene</tt> request.
-  # @see Requests::GetCurrentPreviewScene
+  # @see Mixins::Request#get_current_preview_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentpreviewscene
   class GetCurrentPreviewScene < Response
     # @!attribute [r] current_preview_scene_name
@@ -2555,31 +3927,31 @@ module Responses
     Requests::GetCurrentPreviewScene::Response = Responses::GetCurrentPreviewScene
   end
   # A response to <tt>SetCurrentPreviewScene</tt> request.
-  # @see Requests::SetCurrentPreviewScene
+  # @see Mixins::Request#set_current_preview_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentpreviewscene
   class SetCurrentPreviewScene < Response
     Requests::SetCurrentPreviewScene::Response = Responses::SetCurrentPreviewScene
   end
   # A response to <tt>CreateScene</tt> request.
-  # @see Requests::CreateScene
+  # @see Mixins::Request#create_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscene
   class CreateScene < Response
     Requests::CreateScene::Response = Responses::CreateScene
   end
   # A response to <tt>RemoveScene</tt> request.
-  # @see Requests::RemoveScene
+  # @see Mixins::Request#remove_scene
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removescene
   class RemoveScene < Response
     Requests::RemoveScene::Response = Responses::RemoveScene
   end
   # A response to <tt>SetSceneName</tt> request.
-  # @see Requests::SetSceneName
+  # @see Mixins::Request#set_scene_name
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenename
   class SetSceneName < Response
     Requests::SetSceneName::Response = Responses::SetSceneName
   end
   # A response to <tt>GetSceneSceneTransitionOverride</tt> request.
-  # @see Requests::GetSceneSceneTransitionOverride
+  # @see Mixins::Request#get_scene_scene_transition_override
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenescenetransitionoverride
   class GetSceneSceneTransitionOverride < Response
     # @!attribute [r] transition_name
@@ -2591,13 +3963,13 @@ module Responses
     Requests::GetSceneSceneTransitionOverride::Response = Responses::GetSceneSceneTransitionOverride
   end
   # A response to <tt>SetSceneSceneTransitionOverride</tt> request.
-  # @see Requests::SetSceneSceneTransitionOverride
+  # @see Mixins::Request#set_scene_scene_transition_override
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenescenetransitionoverride
   class SetSceneSceneTransitionOverride < Response
     Requests::SetSceneSceneTransitionOverride::Response = Responses::SetSceneSceneTransitionOverride
   end
   # A response to <tt>GetSourceActive</tt> request.
-  # @see Requests::GetSourceActive
+  # @see Mixins::Request#get_source_active
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourceactive
   class GetSourceActive < Response
     # @!attribute [r] video_active
@@ -2609,7 +3981,7 @@ module Responses
     Requests::GetSourceActive::Response = Responses::GetSourceActive
   end
   # A response to <tt>GetSourceScreenshot</tt> request.
-  # @see Requests::GetSourceScreenshot
+  # @see Mixins::Request#get_source_screenshot
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcescreenshot
   class GetSourceScreenshot < Response
     # @!attribute [r] image_data
@@ -2618,7 +3990,7 @@ module Responses
     Requests::GetSourceScreenshot::Response = Responses::GetSourceScreenshot
   end
   # A response to <tt>SaveSourceScreenshot</tt> request.
-  # @see Requests::SaveSourceScreenshot
+  # @see Mixins::Request#save_source_screenshot
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#savesourcescreenshot
   class SaveSourceScreenshot < Response
     # @!attribute [r] image_data
@@ -2627,7 +3999,7 @@ module Responses
     Requests::SaveSourceScreenshot::Response = Responses::SaveSourceScreenshot
   end
   # A response to <tt>GetStreamStatus</tt> request.
-  # @see Requests::GetStreamStatus
+  # @see Mixins::Request#get_stream_status
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamstatus
   class GetStreamStatus < Response
     # @!attribute [r] output_active
@@ -2654,7 +4026,7 @@ module Responses
     Requests::GetStreamStatus::Response = Responses::GetStreamStatus
   end
   # A response to <tt>ToggleStream</tt> request.
-  # @see Requests::ToggleStream
+  # @see Mixins::Request#toggle_stream
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#togglestream
   class ToggleStream < Response
     # @!attribute [r] output_active
@@ -2663,25 +4035,25 @@ module Responses
     Requests::ToggleStream::Response = Responses::ToggleStream
   end
   # A response to <tt>StartStream</tt> request.
-  # @see Requests::StartStream
+  # @see Mixins::Request#start_stream
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#startstream
   class StartStream < Response
     Requests::StartStream::Response = Responses::StartStream
   end
   # A response to <tt>StopStream</tt> request.
-  # @see Requests::StopStream
+  # @see Mixins::Request#stop_stream
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#stopstream
   class StopStream < Response
     Requests::StopStream::Response = Responses::StopStream
   end
   # A response to <tt>SendStreamCaption</tt> request.
-  # @see Requests::SendStreamCaption
+  # @see Mixins::Request#send_stream_caption
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#sendstreamcaption
   class SendStreamCaption < Response
     Requests::SendStreamCaption::Response = Responses::SendStreamCaption
   end
   # A response to <tt>GetTransitionKindList</tt> request.
-  # @see Requests::GetTransitionKindList
+  # @see Mixins::Request#get_transition_kind_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gettransitionkindlist
   class GetTransitionKindList < Response
     # @!attribute [r] transition_kinds
@@ -2690,7 +4062,7 @@ module Responses
     Requests::GetTransitionKindList::Response = Responses::GetTransitionKindList
   end
   # A response to <tt>GetSceneTransitionList</tt> request.
-  # @see Requests::GetSceneTransitionList
+  # @see Mixins::Request#get_scene_transition_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenetransitionlist
   class GetSceneTransitionList < Response
     # @!attribute [r] current_scene_transition_name
@@ -2705,7 +4077,7 @@ module Responses
     Requests::GetSceneTransitionList::Response = Responses::GetSceneTransitionList
   end
   # A response to <tt>GetCurrentSceneTransition</tt> request.
-  # @see Requests::GetCurrentSceneTransition
+  # @see Mixins::Request#get_current_scene_transition
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentscenetransition
   class GetCurrentSceneTransition < Response
     # @!attribute [r] transition_name
@@ -2729,25 +4101,25 @@ module Responses
     Requests::GetCurrentSceneTransition::Response = Responses::GetCurrentSceneTransition
   end
   # A response to <tt>SetCurrentSceneTransition</tt> request.
-  # @see Requests::SetCurrentSceneTransition
+  # @see Mixins::Request#set_current_scene_transition
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransition
   class SetCurrentSceneTransition < Response
     Requests::SetCurrentSceneTransition::Response = Responses::SetCurrentSceneTransition
   end
   # A response to <tt>SetCurrentSceneTransitionDuration</tt> request.
-  # @see Requests::SetCurrentSceneTransitionDuration
+  # @see Mixins::Request#set_current_scene_transition_duration
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionduration
   class SetCurrentSceneTransitionDuration < Response
     Requests::SetCurrentSceneTransitionDuration::Response = Responses::SetCurrentSceneTransitionDuration
   end
   # A response to <tt>SetCurrentSceneTransitionSettings</tt> request.
-  # @see Requests::SetCurrentSceneTransitionSettings
+  # @see Mixins::Request#set_current_scene_transition_settings
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionsettings
   class SetCurrentSceneTransitionSettings < Response
     Requests::SetCurrentSceneTransitionSettings::Response = Responses::SetCurrentSceneTransitionSettings
   end
   # A response to <tt>GetCurrentSceneTransitionCursor</tt> request.
-  # @see Requests::GetCurrentSceneTransitionCursor
+  # @see Mixins::Request#get_current_scene_transition_cursor
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentscenetransitioncursor
   class GetCurrentSceneTransitionCursor < Response
     # @!attribute [r] transition_cursor
@@ -2756,19 +4128,19 @@ module Responses
     Requests::GetCurrentSceneTransitionCursor::Response = Responses::GetCurrentSceneTransitionCursor
   end
   # A response to <tt>TriggerStudioModeTransition</tt> request.
-  # @see Requests::TriggerStudioModeTransition
+  # @see Mixins::Request#trigger_studio_mode_transition
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerstudiomodetransition
   class TriggerStudioModeTransition < Response
     Requests::TriggerStudioModeTransition::Response = Responses::TriggerStudioModeTransition
   end
   # A response to <tt>SetTBarPosition</tt> request.
-  # @see Requests::SetTBarPosition
+  # @see Mixins::Request#set_t_bar_position
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#settbarposition
   class SetTBarPosition < Response
     Requests::SetTBarPosition::Response = Responses::SetTBarPosition
   end
   # A response to <tt>GetStudioModeEnabled</tt> request.
-  # @see Requests::GetStudioModeEnabled
+  # @see Mixins::Request#get_studio_mode_enabled
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstudiomodeenabled
   class GetStudioModeEnabled < Response
     # @!attribute [r] studio_mode_enabled
@@ -2777,31 +4149,31 @@ module Responses
     Requests::GetStudioModeEnabled::Response = Responses::GetStudioModeEnabled
   end
   # A response to <tt>SetStudioModeEnabled</tt> request.
-  # @see Requests::SetStudioModeEnabled
+  # @see Mixins::Request#set_studio_mode_enabled
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setstudiomodeenabled
   class SetStudioModeEnabled < Response
     Requests::SetStudioModeEnabled::Response = Responses::SetStudioModeEnabled
   end
   # A response to <tt>OpenInputPropertiesDialog</tt> request.
-  # @see Requests::OpenInputPropertiesDialog
+  # @see Mixins::Request#open_input_properties_dialog
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputpropertiesdialog
   class OpenInputPropertiesDialog < Response
     Requests::OpenInputPropertiesDialog::Response = Responses::OpenInputPropertiesDialog
   end
   # A response to <tt>OpenInputFiltersDialog</tt> request.
-  # @see Requests::OpenInputFiltersDialog
+  # @see Mixins::Request#open_input_filters_dialog
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputfiltersdialog
   class OpenInputFiltersDialog < Response
     Requests::OpenInputFiltersDialog::Response = Responses::OpenInputFiltersDialog
   end
   # A response to <tt>OpenInputInteractDialog</tt> request.
-  # @see Requests::OpenInputInteractDialog
+  # @see Mixins::Request#open_input_interact_dialog
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputinteractdialog
   class OpenInputInteractDialog < Response
     Requests::OpenInputInteractDialog::Response = Responses::OpenInputInteractDialog
   end
   # A response to <tt>GetMonitorList</tt> request.
-  # @see Requests::GetMonitorList
+  # @see Mixins::Request#get_monitor_list
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmonitorlist
   class GetMonitorList < Response
     # @!attribute [r] monitors
@@ -3236,7 +4608,7 @@ module Request
   # @param slot_name [String] <tt>slotName</tt> field
   # @return [Future<Responses::GetPersistentData>]
   def get_persistent_data(realm:, slot_name:)
-    send_request(Requests::GetPersistentData.new({"realm" => TypeConverters::String.as_json(realm), "slotName" => TypeConverters::String.as_json(slot_name)}))
+    send_request(Requests::GetPersistentData.new({realm: realm, slot_name: slot_name}))
   end
   # Sends <tt>SetPersistentData</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setpersistentdata
@@ -3245,7 +4617,7 @@ module Request
   # @param slot_value [Object] <tt>slotValue</tt> field
   # @return [Future<Responses::SetPersistentData>]
   def set_persistent_data(realm:, slot_name:, slot_value:)
-    send_request(Requests::SetPersistentData.new({"realm" => TypeConverters::String.as_json(realm), "slotName" => TypeConverters::String.as_json(slot_name), "slotValue" => TypeConverters::Any.as_json(slot_value)}))
+    send_request(Requests::SetPersistentData.new({realm: realm, slot_name: slot_name, slot_value: slot_value}))
   end
   # Sends <tt>GetSceneCollectionList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenecollectionlist
@@ -3258,14 +4630,14 @@ module Request
   # @param scene_collection_name [String] <tt>sceneCollectionName</tt> field
   # @return [Future<Responses::SetCurrentSceneCollection>]
   def set_current_scene_collection(scene_collection_name:)
-    send_request(Requests::SetCurrentSceneCollection.new({"sceneCollectionName" => TypeConverters::String.as_json(scene_collection_name)}))
+    send_request(Requests::SetCurrentSceneCollection.new({scene_collection_name: scene_collection_name}))
   end
   # Sends <tt>CreateSceneCollection</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscenecollection
   # @param scene_collection_name [String] <tt>sceneCollectionName</tt> field
   # @return [Future<Responses::CreateSceneCollection>]
   def create_scene_collection(scene_collection_name:)
-    send_request(Requests::CreateSceneCollection.new({"sceneCollectionName" => TypeConverters::String.as_json(scene_collection_name)}))
+    send_request(Requests::CreateSceneCollection.new({scene_collection_name: scene_collection_name}))
   end
   # Sends <tt>GetProfileList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofilelist
@@ -3278,21 +4650,21 @@ module Request
   # @param profile_name [String] <tt>profileName</tt> field
   # @return [Future<Responses::SetCurrentProfile>]
   def set_current_profile(profile_name:)
-    send_request(Requests::SetCurrentProfile.new({"profileName" => TypeConverters::String.as_json(profile_name)}))
+    send_request(Requests::SetCurrentProfile.new({profile_name: profile_name}))
   end
   # Sends <tt>CreateProfile</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createprofile
   # @param profile_name [String] <tt>profileName</tt> field
   # @return [Future<Responses::CreateProfile>]
   def create_profile(profile_name:)
-    send_request(Requests::CreateProfile.new({"profileName" => TypeConverters::String.as_json(profile_name)}))
+    send_request(Requests::CreateProfile.new({profile_name: profile_name}))
   end
   # Sends <tt>RemoveProfile</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeprofile
   # @param profile_name [String] <tt>profileName</tt> field
   # @return [Future<Responses::RemoveProfile>]
   def remove_profile(profile_name:)
-    send_request(Requests::RemoveProfile.new({"profileName" => TypeConverters::String.as_json(profile_name)}))
+    send_request(Requests::RemoveProfile.new({profile_name: profile_name}))
   end
   # Sends <tt>GetProfileParameter</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getprofileparameter
@@ -3300,7 +4672,7 @@ module Request
   # @param parameter_name [String] <tt>parameterName</tt> field
   # @return [Future<Responses::GetProfileParameter>]
   def get_profile_parameter(parameter_category:, parameter_name:)
-    send_request(Requests::GetProfileParameter.new({"parameterCategory" => TypeConverters::String.as_json(parameter_category), "parameterName" => TypeConverters::String.as_json(parameter_name)}))
+    send_request(Requests::GetProfileParameter.new({parameter_category: parameter_category, parameter_name: parameter_name}))
   end
   # Sends <tt>SetProfileParameter</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setprofileparameter
@@ -3309,7 +4681,7 @@ module Request
   # @param parameter_value [String] <tt>parameterValue</tt> field
   # @return [Future<Responses::SetProfileParameter>]
   def set_profile_parameter(parameter_category:, parameter_name:, parameter_value:)
-    send_request(Requests::SetProfileParameter.new({"parameterCategory" => TypeConverters::String.as_json(parameter_category), "parameterName" => TypeConverters::String.as_json(parameter_name), "parameterValue" => TypeConverters::String.as_json(parameter_value)}))
+    send_request(Requests::SetProfileParameter.new({parameter_category: parameter_category, parameter_name: parameter_name, parameter_value: parameter_value}))
   end
   # Sends <tt>GetVideoSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvideosettings
@@ -3327,7 +4699,7 @@ module Request
   # @param output_height [Numeric, nil] <tt>outputHeight</tt> field
   # @return [Future<Responses::SetVideoSettings>]
   def set_video_settings(fps_numerator: nil, fps_denominator: nil, base_width: nil, base_height: nil, output_width: nil, output_height: nil)
-    send_request(Requests::SetVideoSettings.new({"fpsNumerator" => TypeConverters::Optional[TypeConverters::Number].as_json(fps_numerator), "fpsDenominator" => TypeConverters::Optional[TypeConverters::Number].as_json(fps_denominator), "baseWidth" => TypeConverters::Optional[TypeConverters::Number].as_json(base_width), "baseHeight" => TypeConverters::Optional[TypeConverters::Number].as_json(base_height), "outputWidth" => TypeConverters::Optional[TypeConverters::Number].as_json(output_width), "outputHeight" => TypeConverters::Optional[TypeConverters::Number].as_json(output_height)}))
+    send_request(Requests::SetVideoSettings.new({fps_numerator: fps_numerator, fps_denominator: fps_denominator, base_width: base_width, base_height: base_height, output_width: output_width, output_height: output_height}))
   end
   # Sends <tt>GetStreamServiceSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamservicesettings
@@ -3341,7 +4713,7 @@ module Request
   # @param stream_service_settings [Hash] <tt>streamServiceSettings</tt> field
   # @return [Future<Responses::SetStreamServiceSettings>]
   def set_stream_service_settings(stream_service_type:, stream_service_settings:)
-    send_request(Requests::SetStreamServiceSettings.new({"streamServiceType" => TypeConverters::String.as_json(stream_service_type), "streamServiceSettings" => TypeConverters::Object.as_json(stream_service_settings)}))
+    send_request(Requests::SetStreamServiceSettings.new({stream_service_type: stream_service_type, stream_service_settings: stream_service_settings}))
   end
   # Sends <tt>GetRecordDirectory</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getrecorddirectory
@@ -3354,14 +4726,14 @@ module Request
   # @param source_name [String] <tt>sourceName</tt> field
   # @return [Future<Responses::GetSourceFilterList>]
   def get_source_filter_list(source_name:)
-    send_request(Requests::GetSourceFilterList.new({"sourceName" => TypeConverters::String.as_json(source_name)}))
+    send_request(Requests::GetSourceFilterList.new({source_name: source_name}))
   end
   # Sends <tt>GetSourceFilterDefaultSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilterdefaultsettings
   # @param filter_kind [String] <tt>filterKind</tt> field
   # @return [Future<Responses::GetSourceFilterDefaultSettings>]
   def get_source_filter_default_settings(filter_kind:)
-    send_request(Requests::GetSourceFilterDefaultSettings.new({"filterKind" => TypeConverters::String.as_json(filter_kind)}))
+    send_request(Requests::GetSourceFilterDefaultSettings.new({filter_kind: filter_kind}))
   end
   # Sends <tt>CreateSourceFilter</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsourcefilter
@@ -3371,7 +4743,7 @@ module Request
   # @param filter_settings [Hash, nil] <tt>filterSettings</tt> field
   # @return [Future<Responses::CreateSourceFilter>]
   def create_source_filter(source_name:, filter_name:, filter_kind:, filter_settings: nil)
-    send_request(Requests::CreateSourceFilter.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name), "filterKind" => TypeConverters::String.as_json(filter_kind), "filterSettings" => TypeConverters::Optional[TypeConverters::Object].as_json(filter_settings)}))
+    send_request(Requests::CreateSourceFilter.new({source_name: source_name, filter_name: filter_name, filter_kind: filter_kind, filter_settings: filter_settings}))
   end
   # Sends <tt>RemoveSourceFilter</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesourcefilter
@@ -3379,7 +4751,7 @@ module Request
   # @param filter_name [String] <tt>filterName</tt> field
   # @return [Future<Responses::RemoveSourceFilter>]
   def remove_source_filter(source_name:, filter_name:)
-    send_request(Requests::RemoveSourceFilter.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name)}))
+    send_request(Requests::RemoveSourceFilter.new({source_name: source_name, filter_name: filter_name}))
   end
   # Sends <tt>SetSourceFilterName</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltername
@@ -3388,7 +4760,7 @@ module Request
   # @param new_filter_name [String] <tt>newFilterName</tt> field
   # @return [Future<Responses::SetSourceFilterName>]
   def set_source_filter_name(source_name:, filter_name:, new_filter_name:)
-    send_request(Requests::SetSourceFilterName.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name), "newFilterName" => TypeConverters::String.as_json(new_filter_name)}))
+    send_request(Requests::SetSourceFilterName.new({source_name: source_name, filter_name: filter_name, new_filter_name: new_filter_name}))
   end
   # Sends <tt>GetSourceFilter</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcefilter
@@ -3396,7 +4768,7 @@ module Request
   # @param filter_name [String] <tt>filterName</tt> field
   # @return [Future<Responses::GetSourceFilter>]
   def get_source_filter(source_name:, filter_name:)
-    send_request(Requests::GetSourceFilter.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name)}))
+    send_request(Requests::GetSourceFilter.new({source_name: source_name, filter_name: filter_name}))
   end
   # Sends <tt>SetSourceFilterIndex</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterindex
@@ -3405,7 +4777,7 @@ module Request
   # @param filter_index [Numeric] <tt>filterIndex</tt> field
   # @return [Future<Responses::SetSourceFilterIndex>]
   def set_source_filter_index(source_name:, filter_name:, filter_index:)
-    send_request(Requests::SetSourceFilterIndex.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name), "filterIndex" => TypeConverters::Number.as_json(filter_index)}))
+    send_request(Requests::SetSourceFilterIndex.new({source_name: source_name, filter_name: filter_name, filter_index: filter_index}))
   end
   # Sends <tt>SetSourceFilterSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefiltersettings
@@ -3415,7 +4787,7 @@ module Request
   # @param overlay [Boolean, nil] <tt>overlay</tt> field
   # @return [Future<Responses::SetSourceFilterSettings>]
   def set_source_filter_settings(source_name:, filter_name:, filter_settings:, overlay: nil)
-    send_request(Requests::SetSourceFilterSettings.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name), "filterSettings" => TypeConverters::Object.as_json(filter_settings), "overlay" => TypeConverters::Optional[TypeConverters::Boolean].as_json(overlay)}))
+    send_request(Requests::SetSourceFilterSettings.new({source_name: source_name, filter_name: filter_name, filter_settings: filter_settings, overlay: overlay}))
   end
   # Sends <tt>SetSourceFilterEnabled</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsourcefilterenabled
@@ -3424,7 +4796,7 @@ module Request
   # @param filter_enabled [Boolean] <tt>filterEnabled</tt> field
   # @return [Future<Responses::SetSourceFilterEnabled>]
   def set_source_filter_enabled(source_name:, filter_name:, filter_enabled:)
-    send_request(Requests::SetSourceFilterEnabled.new({"sourceName" => TypeConverters::String.as_json(source_name), "filterName" => TypeConverters::String.as_json(filter_name), "filterEnabled" => TypeConverters::Boolean.as_json(filter_enabled)}))
+    send_request(Requests::SetSourceFilterEnabled.new({source_name: source_name, filter_name: filter_name, filter_enabled: filter_enabled}))
   end
   # Sends <tt>GetVersion</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getversion
@@ -3443,7 +4815,7 @@ module Request
   # @param event_data [Hash] <tt>eventData</tt> field
   # @return [Future<Responses::BroadcastCustomEvent>]
   def broadcast_custom_event(event_data:)
-    send_request(Requests::BroadcastCustomEvent.new({"eventData" => TypeConverters::Object.as_json(event_data)}))
+    send_request(Requests::BroadcastCustomEvent.new({event_data: event_data}))
   end
   # Sends <tt>CallVendorRequest</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#callvendorrequest
@@ -3452,7 +4824,7 @@ module Request
   # @param request_data [Hash, nil] <tt>requestData</tt> field
   # @return [Future<Responses::CallVendorRequest>]
   def call_vendor_request(vendor_name:, request_type:, request_data: nil)
-    send_request(Requests::CallVendorRequest.new({"vendorName" => TypeConverters::String.as_json(vendor_name), "requestType" => TypeConverters::String.as_json(request_type), "requestData" => TypeConverters::Optional[TypeConverters::Object].as_json(request_data)}))
+    send_request(Requests::CallVendorRequest.new({vendor_name: vendor_name, request_type: request_type, request_data: request_data}))
   end
   # Sends <tt>GetHotkeyList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gethotkeylist
@@ -3465,7 +4837,7 @@ module Request
   # @param hotkey_name [String] <tt>hotkeyName</tt> field
   # @return [Future<Responses::TriggerHotkeyByName>]
   def trigger_hotkey_by_name(hotkey_name:)
-    send_request(Requests::TriggerHotkeyByName.new({"hotkeyName" => TypeConverters::String.as_json(hotkey_name)}))
+    send_request(Requests::TriggerHotkeyByName.new({hotkey_name: hotkey_name}))
   end
   # Sends <tt>TriggerHotkeyByKeySequence</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggerhotkeybykeysequence
@@ -3473,7 +4845,7 @@ module Request
   # @param key_modifiers [Hash, nil] <tt>keyModifiers</tt> field
   # @return [Future<Responses::TriggerHotkeyByKeySequence>]
   def trigger_hotkey_by_key_sequence(key_id: nil, key_modifiers: nil)
-    send_request(Requests::TriggerHotkeyByKeySequence.new({"keyId" => TypeConverters::Optional[TypeConverters::String].as_json(key_id), "keyModifiers" => TypeConverters::Optional[TypeConverters::Object[{:shift=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"shift"}, :control=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"control"}, :alt=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"alt"}, :command=>{:type=>TypeConverters::Optional[TypeConverters::Boolean], :wire_name=>"command"}}]].as_json(key_modifiers)}))
+    send_request(Requests::TriggerHotkeyByKeySequence.new({key_id: key_id, key_modifiers: key_modifiers}))
   end
   # Sends <tt>Sleep</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#sleep
@@ -3481,21 +4853,21 @@ module Request
   # @param sleep_frames [Numeric] <tt>sleepFrames</tt> field
   # @return [Future<Responses::Sleep>]
   def sleep(sleep_millis:, sleep_frames:)
-    send_request(Requests::Sleep.new({"sleepMillis" => TypeConverters::Number.as_json(sleep_millis), "sleepFrames" => TypeConverters::Number.as_json(sleep_frames)}))
+    send_request(Requests::Sleep.new({sleep_millis: sleep_millis, sleep_frames: sleep_frames}))
   end
   # Sends <tt>GetInputList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputlist
   # @param input_kind [String, nil] <tt>inputKind</tt> field
   # @return [Future<Responses::GetInputList>]
   def get_input_list(input_kind: nil)
-    send_request(Requests::GetInputList.new({"inputKind" => TypeConverters::Optional[TypeConverters::String].as_json(input_kind)}))
+    send_request(Requests::GetInputList.new({input_kind: input_kind}))
   end
   # Sends <tt>GetInputKindList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputkindlist
   # @param unversioned [Boolean, nil] <tt>unversioned</tt> field
   # @return [Future<Responses::GetInputKindList>]
   def get_input_kind_list(unversioned: nil)
-    send_request(Requests::GetInputKindList.new({"unversioned" => TypeConverters::Optional[TypeConverters::Boolean].as_json(unversioned)}))
+    send_request(Requests::GetInputKindList.new({unversioned: unversioned}))
   end
   # Sends <tt>GetSpecialInputs</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getspecialinputs
@@ -3512,14 +4884,14 @@ module Request
   # @param scene_item_enabled [Boolean, nil] <tt>sceneItemEnabled</tt> field
   # @return [Future<Responses::CreateInput>]
   def create_input(scene_name:, input_name:, input_kind:, input_settings: nil, scene_item_enabled: nil)
-    send_request(Requests::CreateInput.new({"sceneName" => TypeConverters::String.as_json(scene_name), "inputName" => TypeConverters::String.as_json(input_name), "inputKind" => TypeConverters::String.as_json(input_kind), "inputSettings" => TypeConverters::Optional[TypeConverters::Object].as_json(input_settings), "sceneItemEnabled" => TypeConverters::Optional[TypeConverters::Boolean].as_json(scene_item_enabled)}))
+    send_request(Requests::CreateInput.new({scene_name: scene_name, input_name: input_name, input_kind: input_kind, input_settings: input_settings, scene_item_enabled: scene_item_enabled}))
   end
   # Sends <tt>RemoveInput</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removeinput
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::RemoveInput>]
   def remove_input(input_name:)
-    send_request(Requests::RemoveInput.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::RemoveInput.new({input_name: input_name}))
   end
   # Sends <tt>SetInputName</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputname
@@ -3527,21 +4899,21 @@ module Request
   # @param new_input_name [String] <tt>newInputName</tt> field
   # @return [Future<Responses::SetInputName>]
   def set_input_name(input_name:, new_input_name:)
-    send_request(Requests::SetInputName.new({"inputName" => TypeConverters::String.as_json(input_name), "newInputName" => TypeConverters::String.as_json(new_input_name)}))
+    send_request(Requests::SetInputName.new({input_name: input_name, new_input_name: new_input_name}))
   end
   # Sends <tt>GetInputDefaultSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputdefaultsettings
   # @param input_kind [String] <tt>inputKind</tt> field
   # @return [Future<Responses::GetInputDefaultSettings>]
   def get_input_default_settings(input_kind:)
-    send_request(Requests::GetInputDefaultSettings.new({"inputKind" => TypeConverters::String.as_json(input_kind)}))
+    send_request(Requests::GetInputDefaultSettings.new({input_kind: input_kind}))
   end
   # Sends <tt>GetInputSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputsettings
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputSettings>]
   def get_input_settings(input_name:)
-    send_request(Requests::GetInputSettings.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputSettings.new({input_name: input_name}))
   end
   # Sends <tt>SetInputSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputsettings
@@ -3550,14 +4922,14 @@ module Request
   # @param overlay [Boolean, nil] <tt>overlay</tt> field
   # @return [Future<Responses::SetInputSettings>]
   def set_input_settings(input_name:, input_settings:, overlay: nil)
-    send_request(Requests::SetInputSettings.new({"inputName" => TypeConverters::String.as_json(input_name), "inputSettings" => TypeConverters::Object.as_json(input_settings), "overlay" => TypeConverters::Optional[TypeConverters::Boolean].as_json(overlay)}))
+    send_request(Requests::SetInputSettings.new({input_name: input_name, input_settings: input_settings, overlay: overlay}))
   end
   # Sends <tt>GetInputMute</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputmute
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputMute>]
   def get_input_mute(input_name:)
-    send_request(Requests::GetInputMute.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputMute.new({input_name: input_name}))
   end
   # Sends <tt>SetInputMute</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputmute
@@ -3565,21 +4937,21 @@ module Request
   # @param input_muted [Boolean] <tt>inputMuted</tt> field
   # @return [Future<Responses::SetInputMute>]
   def set_input_mute(input_name:, input_muted:)
-    send_request(Requests::SetInputMute.new({"inputName" => TypeConverters::String.as_json(input_name), "inputMuted" => TypeConverters::Boolean.as_json(input_muted)}))
+    send_request(Requests::SetInputMute.new({input_name: input_name, input_muted: input_muted}))
   end
   # Sends <tt>ToggleInputMute</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#toggleinputmute
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::ToggleInputMute>]
   def toggle_input_mute(input_name:)
-    send_request(Requests::ToggleInputMute.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::ToggleInputMute.new({input_name: input_name}))
   end
   # Sends <tt>GetInputVolume</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputvolume
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputVolume>]
   def get_input_volume(input_name:)
-    send_request(Requests::GetInputVolume.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputVolume.new({input_name: input_name}))
   end
   # Sends <tt>SetInputVolume</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputvolume
@@ -3588,14 +4960,14 @@ module Request
   # @param input_volume_db [Numeric, nil] <tt>inputVolumeDb</tt> field
   # @return [Future<Responses::SetInputVolume>]
   def set_input_volume(input_name:, input_volume_mul: nil, input_volume_db: nil)
-    send_request(Requests::SetInputVolume.new({"inputName" => TypeConverters::String.as_json(input_name), "inputVolumeMul" => TypeConverters::Optional[TypeConverters::Number].as_json(input_volume_mul), "inputVolumeDb" => TypeConverters::Optional[TypeConverters::Number].as_json(input_volume_db)}))
+    send_request(Requests::SetInputVolume.new({input_name: input_name, input_volume_mul: input_volume_mul, input_volume_db: input_volume_db}))
   end
   # Sends <tt>GetInputAudioBalance</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiobalance
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputAudioBalance>]
   def get_input_audio_balance(input_name:)
-    send_request(Requests::GetInputAudioBalance.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputAudioBalance.new({input_name: input_name}))
   end
   # Sends <tt>SetInputAudioBalance</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiobalance
@@ -3603,14 +4975,14 @@ module Request
   # @param input_audio_balance [Numeric] <tt>inputAudioBalance</tt> field
   # @return [Future<Responses::SetInputAudioBalance>]
   def set_input_audio_balance(input_name:, input_audio_balance:)
-    send_request(Requests::SetInputAudioBalance.new({"inputName" => TypeConverters::String.as_json(input_name), "inputAudioBalance" => TypeConverters::Number.as_json(input_audio_balance)}))
+    send_request(Requests::SetInputAudioBalance.new({input_name: input_name, input_audio_balance: input_audio_balance}))
   end
   # Sends <tt>GetInputAudioSyncOffset</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiosyncoffset
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputAudioSyncOffset>]
   def get_input_audio_sync_offset(input_name:)
-    send_request(Requests::GetInputAudioSyncOffset.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputAudioSyncOffset.new({input_name: input_name}))
   end
   # Sends <tt>SetInputAudioSyncOffset</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiosyncoffset
@@ -3618,14 +4990,14 @@ module Request
   # @param input_audio_sync_offset [Numeric] <tt>inputAudioSyncOffset</tt> field
   # @return [Future<Responses::SetInputAudioSyncOffset>]
   def set_input_audio_sync_offset(input_name:, input_audio_sync_offset:)
-    send_request(Requests::SetInputAudioSyncOffset.new({"inputName" => TypeConverters::String.as_json(input_name), "inputAudioSyncOffset" => TypeConverters::Number.as_json(input_audio_sync_offset)}))
+    send_request(Requests::SetInputAudioSyncOffset.new({input_name: input_name, input_audio_sync_offset: input_audio_sync_offset}))
   end
   # Sends <tt>GetInputAudioMonitorType</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiomonitortype
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputAudioMonitorType>]
   def get_input_audio_monitor_type(input_name:)
-    send_request(Requests::GetInputAudioMonitorType.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputAudioMonitorType.new({input_name: input_name}))
   end
   # Sends <tt>SetInputAudioMonitorType</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiomonitortype
@@ -3633,14 +5005,14 @@ module Request
   # @param monitor_type [String] <tt>monitorType</tt> field
   # @return [Future<Responses::SetInputAudioMonitorType>]
   def set_input_audio_monitor_type(input_name:, monitor_type:)
-    send_request(Requests::SetInputAudioMonitorType.new({"inputName" => TypeConverters::String.as_json(input_name), "monitorType" => TypeConverters::String.as_json(monitor_type)}))
+    send_request(Requests::SetInputAudioMonitorType.new({input_name: input_name, monitor_type: monitor_type}))
   end
   # Sends <tt>GetInputAudioTracks</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputaudiotracks
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetInputAudioTracks>]
   def get_input_audio_tracks(input_name:)
-    send_request(Requests::GetInputAudioTracks.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetInputAudioTracks.new({input_name: input_name}))
   end
   # Sends <tt>SetInputAudioTracks</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setinputaudiotracks
@@ -3648,7 +5020,7 @@ module Request
   # @param input_audio_tracks [Hash] <tt>inputAudioTracks</tt> field
   # @return [Future<Responses::SetInputAudioTracks>]
   def set_input_audio_tracks(input_name:, input_audio_tracks:)
-    send_request(Requests::SetInputAudioTracks.new({"inputName" => TypeConverters::String.as_json(input_name), "inputAudioTracks" => TypeConverters::Object.as_json(input_audio_tracks)}))
+    send_request(Requests::SetInputAudioTracks.new({input_name: input_name, input_audio_tracks: input_audio_tracks}))
   end
   # Sends <tt>GetInputPropertiesListPropertyItems</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getinputpropertieslistpropertyitems
@@ -3656,7 +5028,7 @@ module Request
   # @param property_name [String] <tt>propertyName</tt> field
   # @return [Future<Responses::GetInputPropertiesListPropertyItems>]
   def get_input_properties_list_property_items(input_name:, property_name:)
-    send_request(Requests::GetInputPropertiesListPropertyItems.new({"inputName" => TypeConverters::String.as_json(input_name), "propertyName" => TypeConverters::String.as_json(property_name)}))
+    send_request(Requests::GetInputPropertiesListPropertyItems.new({input_name: input_name, property_name: property_name}))
   end
   # Sends <tt>PressInputPropertiesButton</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#pressinputpropertiesbutton
@@ -3664,14 +5036,14 @@ module Request
   # @param property_name [String] <tt>propertyName</tt> field
   # @return [Future<Responses::PressInputPropertiesButton>]
   def press_input_properties_button(input_name:, property_name:)
-    send_request(Requests::PressInputPropertiesButton.new({"inputName" => TypeConverters::String.as_json(input_name), "propertyName" => TypeConverters::String.as_json(property_name)}))
+    send_request(Requests::PressInputPropertiesButton.new({input_name: input_name, property_name: property_name}))
   end
   # Sends <tt>GetMediaInputStatus</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmediainputstatus
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::GetMediaInputStatus>]
   def get_media_input_status(input_name:)
-    send_request(Requests::GetMediaInputStatus.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::GetMediaInputStatus.new({input_name: input_name}))
   end
   # Sends <tt>SetMediaInputCursor</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setmediainputcursor
@@ -3679,7 +5051,7 @@ module Request
   # @param media_cursor [Numeric] <tt>mediaCursor</tt> field
   # @return [Future<Responses::SetMediaInputCursor>]
   def set_media_input_cursor(input_name:, media_cursor:)
-    send_request(Requests::SetMediaInputCursor.new({"inputName" => TypeConverters::String.as_json(input_name), "mediaCursor" => TypeConverters::Number.as_json(media_cursor)}))
+    send_request(Requests::SetMediaInputCursor.new({input_name: input_name, media_cursor: media_cursor}))
   end
   # Sends <tt>OffsetMediaInputCursor</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#offsetmediainputcursor
@@ -3687,7 +5059,7 @@ module Request
   # @param media_cursor_offset [Numeric] <tt>mediaCursorOffset</tt> field
   # @return [Future<Responses::OffsetMediaInputCursor>]
   def offset_media_input_cursor(input_name:, media_cursor_offset:)
-    send_request(Requests::OffsetMediaInputCursor.new({"inputName" => TypeConverters::String.as_json(input_name), "mediaCursorOffset" => TypeConverters::Number.as_json(media_cursor_offset)}))
+    send_request(Requests::OffsetMediaInputCursor.new({input_name: input_name, media_cursor_offset: media_cursor_offset}))
   end
   # Sends <tt>TriggerMediaInputAction</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#triggermediainputaction
@@ -3695,7 +5067,7 @@ module Request
   # @param media_action [String] <tt>mediaAction</tt> field
   # @return [Future<Responses::TriggerMediaInputAction>]
   def trigger_media_input_action(input_name:, media_action:)
-    send_request(Requests::TriggerMediaInputAction.new({"inputName" => TypeConverters::String.as_json(input_name), "mediaAction" => TypeConverters::String.as_json(media_action)}))
+    send_request(Requests::TriggerMediaInputAction.new({input_name: input_name, media_action: media_action}))
   end
   # Sends <tt>GetVirtualCamStatus</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getvirtualcamstatus
@@ -3804,14 +5176,14 @@ module Request
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::GetSceneItemList>]
   def get_scene_item_list(scene_name:)
-    send_request(Requests::GetSceneItemList.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::GetSceneItemList.new({scene_name: scene_name}))
   end
   # Sends <tt>GetGroupItemList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getgroupitemlist
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::GetGroupItemList>]
   def get_group_item_list(scene_name:)
-    send_request(Requests::GetGroupItemList.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::GetGroupItemList.new({scene_name: scene_name}))
   end
   # Sends <tt>GetSceneItemId</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemid
@@ -3820,7 +5192,7 @@ module Request
   # @param search_offset [Numeric, nil] <tt>searchOffset</tt> field
   # @return [Future<Responses::GetSceneItemId>]
   def get_scene_item_id(scene_name:, source_name:, search_offset: nil)
-    send_request(Requests::GetSceneItemId.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sourceName" => TypeConverters::String.as_json(source_name), "searchOffset" => TypeConverters::Optional[TypeConverters::Number].as_json(search_offset)}))
+    send_request(Requests::GetSceneItemId.new({scene_name: scene_name, source_name: source_name, search_offset: search_offset}))
   end
   # Sends <tt>CreateSceneItem</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createsceneitem
@@ -3829,7 +5201,7 @@ module Request
   # @param scene_item_enabled [Boolean, nil] <tt>sceneItemEnabled</tt> field
   # @return [Future<Responses::CreateSceneItem>]
   def create_scene_item(scene_name:, source_name:, scene_item_enabled: nil)
-    send_request(Requests::CreateSceneItem.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sourceName" => TypeConverters::String.as_json(source_name), "sceneItemEnabled" => TypeConverters::Optional[TypeConverters::Boolean].as_json(scene_item_enabled)}))
+    send_request(Requests::CreateSceneItem.new({scene_name: scene_name, source_name: source_name, scene_item_enabled: scene_item_enabled}))
   end
   # Sends <tt>RemoveSceneItem</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removesceneitem
@@ -3837,7 +5209,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::RemoveSceneItem>]
   def remove_scene_item(scene_name:, scene_item_id:)
-    send_request(Requests::RemoveSceneItem.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::RemoveSceneItem.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>DuplicateSceneItem</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#duplicatesceneitem
@@ -3846,7 +5218,7 @@ module Request
   # @param destination_scene_name [String, nil] <tt>destinationSceneName</tt> field
   # @return [Future<Responses::DuplicateSceneItem>]
   def duplicate_scene_item(scene_name:, scene_item_id:, destination_scene_name: nil)
-    send_request(Requests::DuplicateSceneItem.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "destinationSceneName" => TypeConverters::Optional[TypeConverters::String].as_json(destination_scene_name)}))
+    send_request(Requests::DuplicateSceneItem.new({scene_name: scene_name, scene_item_id: scene_item_id, destination_scene_name: destination_scene_name}))
   end
   # Sends <tt>GetSceneItemTransform</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemtransform
@@ -3854,7 +5226,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::GetSceneItemTransform>]
   def get_scene_item_transform(scene_name:, scene_item_id:)
-    send_request(Requests::GetSceneItemTransform.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::GetSceneItemTransform.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>SetSceneItemTransform</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemtransform
@@ -3863,7 +5235,7 @@ module Request
   # @param scene_item_transform [Hash] <tt>sceneItemTransform</tt> field
   # @return [Future<Responses::SetSceneItemTransform>]
   def set_scene_item_transform(scene_name:, scene_item_id:, scene_item_transform:)
-    send_request(Requests::SetSceneItemTransform.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "sceneItemTransform" => TypeConverters::Object.as_json(scene_item_transform)}))
+    send_request(Requests::SetSceneItemTransform.new({scene_name: scene_name, scene_item_id: scene_item_id, scene_item_transform: scene_item_transform}))
   end
   # Sends <tt>GetSceneItemEnabled</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemenabled
@@ -3871,7 +5243,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::GetSceneItemEnabled>]
   def get_scene_item_enabled(scene_name:, scene_item_id:)
-    send_request(Requests::GetSceneItemEnabled.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::GetSceneItemEnabled.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>SetSceneItemEnabled</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemenabled
@@ -3880,7 +5252,7 @@ module Request
   # @param scene_item_enabled [Boolean] <tt>sceneItemEnabled</tt> field
   # @return [Future<Responses::SetSceneItemEnabled>]
   def set_scene_item_enabled(scene_name:, scene_item_id:, scene_item_enabled:)
-    send_request(Requests::SetSceneItemEnabled.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "sceneItemEnabled" => TypeConverters::Boolean.as_json(scene_item_enabled)}))
+    send_request(Requests::SetSceneItemEnabled.new({scene_name: scene_name, scene_item_id: scene_item_id, scene_item_enabled: scene_item_enabled}))
   end
   # Sends <tt>GetSceneItemLocked</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemlocked
@@ -3888,7 +5260,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::GetSceneItemLocked>]
   def get_scene_item_locked(scene_name:, scene_item_id:)
-    send_request(Requests::GetSceneItemLocked.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::GetSceneItemLocked.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>SetSceneItemLocked</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemlocked
@@ -3897,7 +5269,7 @@ module Request
   # @param scene_item_locked [Boolean] <tt>sceneItemLocked</tt> field
   # @return [Future<Responses::SetSceneItemLocked>]
   def set_scene_item_locked(scene_name:, scene_item_id:, scene_item_locked:)
-    send_request(Requests::SetSceneItemLocked.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "sceneItemLocked" => TypeConverters::Boolean.as_json(scene_item_locked)}))
+    send_request(Requests::SetSceneItemLocked.new({scene_name: scene_name, scene_item_id: scene_item_id, scene_item_locked: scene_item_locked}))
   end
   # Sends <tt>GetSceneItemIndex</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemindex
@@ -3905,7 +5277,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::GetSceneItemIndex>]
   def get_scene_item_index(scene_name:, scene_item_id:)
-    send_request(Requests::GetSceneItemIndex.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::GetSceneItemIndex.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>SetSceneItemIndex</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemindex
@@ -3914,7 +5286,7 @@ module Request
   # @param scene_item_index [Numeric] <tt>sceneItemIndex</tt> field
   # @return [Future<Responses::SetSceneItemIndex>]
   def set_scene_item_index(scene_name:, scene_item_id:, scene_item_index:)
-    send_request(Requests::SetSceneItemIndex.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "sceneItemIndex" => TypeConverters::Number.as_json(scene_item_index)}))
+    send_request(Requests::SetSceneItemIndex.new({scene_name: scene_name, scene_item_id: scene_item_id, scene_item_index: scene_item_index}))
   end
   # Sends <tt>GetSceneItemBlendMode</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsceneitemblendmode
@@ -3922,7 +5294,7 @@ module Request
   # @param scene_item_id [Numeric] <tt>sceneItemId</tt> field
   # @return [Future<Responses::GetSceneItemBlendMode>]
   def get_scene_item_blend_mode(scene_name:, scene_item_id:)
-    send_request(Requests::GetSceneItemBlendMode.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id)}))
+    send_request(Requests::GetSceneItemBlendMode.new({scene_name: scene_name, scene_item_id: scene_item_id}))
   end
   # Sends <tt>SetSceneItemBlendMode</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setsceneitemblendmode
@@ -3931,7 +5303,7 @@ module Request
   # @param scene_item_blend_mode [String] <tt>sceneItemBlendMode</tt> field
   # @return [Future<Responses::SetSceneItemBlendMode>]
   def set_scene_item_blend_mode(scene_name:, scene_item_id:, scene_item_blend_mode:)
-    send_request(Requests::SetSceneItemBlendMode.new({"sceneName" => TypeConverters::String.as_json(scene_name), "sceneItemId" => TypeConverters::Number.as_json(scene_item_id), "sceneItemBlendMode" => TypeConverters::String.as_json(scene_item_blend_mode)}))
+    send_request(Requests::SetSceneItemBlendMode.new({scene_name: scene_name, scene_item_id: scene_item_id, scene_item_blend_mode: scene_item_blend_mode}))
   end
   # Sends <tt>GetSceneList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenelist
@@ -3956,7 +5328,7 @@ module Request
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::SetCurrentProgramScene>]
   def set_current_program_scene(scene_name:)
-    send_request(Requests::SetCurrentProgramScene.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::SetCurrentProgramScene.new({scene_name: scene_name}))
   end
   # Sends <tt>GetCurrentPreviewScene</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentpreviewscene
@@ -3969,21 +5341,21 @@ module Request
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::SetCurrentPreviewScene>]
   def set_current_preview_scene(scene_name:)
-    send_request(Requests::SetCurrentPreviewScene.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::SetCurrentPreviewScene.new({scene_name: scene_name}))
   end
   # Sends <tt>CreateScene</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#createscene
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::CreateScene>]
   def create_scene(scene_name:)
-    send_request(Requests::CreateScene.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::CreateScene.new({scene_name: scene_name}))
   end
   # Sends <tt>RemoveScene</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#removescene
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::RemoveScene>]
   def remove_scene(scene_name:)
-    send_request(Requests::RemoveScene.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::RemoveScene.new({scene_name: scene_name}))
   end
   # Sends <tt>SetSceneName</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenename
@@ -3991,14 +5363,14 @@ module Request
   # @param new_scene_name [String] <tt>newSceneName</tt> field
   # @return [Future<Responses::SetSceneName>]
   def set_scene_name(scene_name:, new_scene_name:)
-    send_request(Requests::SetSceneName.new({"sceneName" => TypeConverters::String.as_json(scene_name), "newSceneName" => TypeConverters::String.as_json(new_scene_name)}))
+    send_request(Requests::SetSceneName.new({scene_name: scene_name, new_scene_name: new_scene_name}))
   end
   # Sends <tt>GetSceneSceneTransitionOverride</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getscenescenetransitionoverride
   # @param scene_name [String] <tt>sceneName</tt> field
   # @return [Future<Responses::GetSceneSceneTransitionOverride>]
   def get_scene_scene_transition_override(scene_name:)
-    send_request(Requests::GetSceneSceneTransitionOverride.new({"sceneName" => TypeConverters::String.as_json(scene_name)}))
+    send_request(Requests::GetSceneSceneTransitionOverride.new({scene_name: scene_name}))
   end
   # Sends <tt>SetSceneSceneTransitionOverride</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setscenescenetransitionoverride
@@ -4007,14 +5379,14 @@ module Request
   # @param transition_duration [Numeric, nil] <tt>transitionDuration</tt> field
   # @return [Future<Responses::SetSceneSceneTransitionOverride>]
   def set_scene_scene_transition_override(scene_name:, transition_name: nil, transition_duration: nil)
-    send_request(Requests::SetSceneSceneTransitionOverride.new({"sceneName" => TypeConverters::String.as_json(scene_name), "transitionName" => TypeConverters::Optional[TypeConverters::String].as_json(transition_name), "transitionDuration" => TypeConverters::Optional[TypeConverters::Number].as_json(transition_duration)}))
+    send_request(Requests::SetSceneSceneTransitionOverride.new({scene_name: scene_name, transition_name: transition_name, transition_duration: transition_duration}))
   end
   # Sends <tt>GetSourceActive</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourceactive
   # @param source_name [String] <tt>sourceName</tt> field
   # @return [Future<Responses::GetSourceActive>]
   def get_source_active(source_name:)
-    send_request(Requests::GetSourceActive.new({"sourceName" => TypeConverters::String.as_json(source_name)}))
+    send_request(Requests::GetSourceActive.new({source_name: source_name}))
   end
   # Sends <tt>GetSourceScreenshot</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getsourcescreenshot
@@ -4025,7 +5397,7 @@ module Request
   # @param image_compression_quality [Numeric, nil] <tt>imageCompressionQuality</tt> field
   # @return [Future<Responses::GetSourceScreenshot>]
   def get_source_screenshot(source_name:, image_format:, image_width: nil, image_height: nil, image_compression_quality: nil)
-    send_request(Requests::GetSourceScreenshot.new({"sourceName" => TypeConverters::String.as_json(source_name), "imageFormat" => TypeConverters::String.as_json(image_format), "imageWidth" => TypeConverters::Optional[TypeConverters::Number].as_json(image_width), "imageHeight" => TypeConverters::Optional[TypeConverters::Number].as_json(image_height), "imageCompressionQuality" => TypeConverters::Optional[TypeConverters::Number].as_json(image_compression_quality)}))
+    send_request(Requests::GetSourceScreenshot.new({source_name: source_name, image_format: image_format, image_width: image_width, image_height: image_height, image_compression_quality: image_compression_quality}))
   end
   # Sends <tt>SaveSourceScreenshot</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#savesourcescreenshot
@@ -4037,7 +5409,7 @@ module Request
   # @param image_compression_quality [Numeric, nil] <tt>imageCompressionQuality</tt> field
   # @return [Future<Responses::SaveSourceScreenshot>]
   def save_source_screenshot(source_name:, image_format:, image_file_path:, image_width: nil, image_height: nil, image_compression_quality: nil)
-    send_request(Requests::SaveSourceScreenshot.new({"sourceName" => TypeConverters::String.as_json(source_name), "imageFormat" => TypeConverters::String.as_json(image_format), "imageFilePath" => TypeConverters::String.as_json(image_file_path), "imageWidth" => TypeConverters::Optional[TypeConverters::Number].as_json(image_width), "imageHeight" => TypeConverters::Optional[TypeConverters::Number].as_json(image_height), "imageCompressionQuality" => TypeConverters::Optional[TypeConverters::Number].as_json(image_compression_quality)}))
+    send_request(Requests::SaveSourceScreenshot.new({source_name: source_name, image_format: image_format, image_file_path: image_file_path, image_width: image_width, image_height: image_height, image_compression_quality: image_compression_quality}))
   end
   # Sends <tt>GetStreamStatus</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstreamstatus
@@ -4068,7 +5440,7 @@ module Request
   # @param caption_text [String] <tt>captionText</tt> field
   # @return [Future<Responses::SendStreamCaption>]
   def send_stream_caption(caption_text:)
-    send_request(Requests::SendStreamCaption.new({"captionText" => TypeConverters::String.as_json(caption_text)}))
+    send_request(Requests::SendStreamCaption.new({caption_text: caption_text}))
   end
   # Sends <tt>GetTransitionKindList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#gettransitionkindlist
@@ -4093,14 +5465,14 @@ module Request
   # @param transition_name [String] <tt>transitionName</tt> field
   # @return [Future<Responses::SetCurrentSceneTransition>]
   def set_current_scene_transition(transition_name:)
-    send_request(Requests::SetCurrentSceneTransition.new({"transitionName" => TypeConverters::String.as_json(transition_name)}))
+    send_request(Requests::SetCurrentSceneTransition.new({transition_name: transition_name}))
   end
   # Sends <tt>SetCurrentSceneTransitionDuration</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionduration
   # @param transition_duration [Numeric] <tt>transitionDuration</tt> field
   # @return [Future<Responses::SetCurrentSceneTransitionDuration>]
   def set_current_scene_transition_duration(transition_duration:)
-    send_request(Requests::SetCurrentSceneTransitionDuration.new({"transitionDuration" => TypeConverters::Number.as_json(transition_duration)}))
+    send_request(Requests::SetCurrentSceneTransitionDuration.new({transition_duration: transition_duration}))
   end
   # Sends <tt>SetCurrentSceneTransitionSettings</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#setcurrentscenetransitionsettings
@@ -4108,7 +5480,7 @@ module Request
   # @param overlay [Boolean, nil] <tt>overlay</tt> field
   # @return [Future<Responses::SetCurrentSceneTransitionSettings>]
   def set_current_scene_transition_settings(transition_settings:, overlay: nil)
-    send_request(Requests::SetCurrentSceneTransitionSettings.new({"transitionSettings" => TypeConverters::Object.as_json(transition_settings), "overlay" => TypeConverters::Optional[TypeConverters::Boolean].as_json(overlay)}))
+    send_request(Requests::SetCurrentSceneTransitionSettings.new({transition_settings: transition_settings, overlay: overlay}))
   end
   # Sends <tt>GetCurrentSceneTransitionCursor</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getcurrentscenetransitioncursor
@@ -4128,7 +5500,7 @@ module Request
   # @param release [Boolean, nil] <tt>release</tt> field
   # @return [Future<Responses::SetTBarPosition>]
   def set_t_bar_position(position:, release: nil)
-    send_request(Requests::SetTBarPosition.new({"position" => TypeConverters::Number.as_json(position), "release" => TypeConverters::Optional[TypeConverters::Boolean].as_json(release)}))
+    send_request(Requests::SetTBarPosition.new({position: position, release: release}))
   end
   # Sends <tt>GetStudioModeEnabled</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getstudiomodeenabled
@@ -4141,28 +5513,28 @@ module Request
   # @param studio_mode_enabled [Boolean] <tt>studioModeEnabled</tt> field
   # @return [Future<Responses::SetStudioModeEnabled>]
   def set_studio_mode_enabled(studio_mode_enabled:)
-    send_request(Requests::SetStudioModeEnabled.new({"studioModeEnabled" => TypeConverters::Boolean.as_json(studio_mode_enabled)}))
+    send_request(Requests::SetStudioModeEnabled.new({studio_mode_enabled: studio_mode_enabled}))
   end
   # Sends <tt>OpenInputPropertiesDialog</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputpropertiesdialog
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::OpenInputPropertiesDialog>]
   def open_input_properties_dialog(input_name:)
-    send_request(Requests::OpenInputPropertiesDialog.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::OpenInputPropertiesDialog.new({input_name: input_name}))
   end
   # Sends <tt>OpenInputFiltersDialog</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputfiltersdialog
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::OpenInputFiltersDialog>]
   def open_input_filters_dialog(input_name:)
-    send_request(Requests::OpenInputFiltersDialog.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::OpenInputFiltersDialog.new({input_name: input_name}))
   end
   # Sends <tt>OpenInputInteractDialog</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#openinputinteractdialog
   # @param input_name [String] <tt>inputName</tt> field
   # @return [Future<Responses::OpenInputInteractDialog>]
   def open_input_interact_dialog(input_name:)
-    send_request(Requests::OpenInputInteractDialog.new({"inputName" => TypeConverters::String.as_json(input_name)}))
+    send_request(Requests::OpenInputInteractDialog.new({input_name: input_name}))
   end
   # Sends <tt>GetMonitorList</tt> request.
   # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md#getmonitorlist

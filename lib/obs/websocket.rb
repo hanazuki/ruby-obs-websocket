@@ -21,6 +21,15 @@ module OBS
       attr_reader :code, :comment
     end
 
+    class ConversionError < Error
+      def initialize(message, value:)
+        @value = value
+        super("#{message}: #{value.inspect}")
+      end
+
+      attr_reader :value
+    end
+
     # Shortcut for {OBS::WebSocket::Client#initialize}
     #
     # @see OBS::WebSocket::Client#initialize
@@ -307,41 +316,49 @@ module OBS
 
       module TypeConverters
         Any = TypeConverter.new(name: 'Any') do
-          def as_ruby(s)
-            s
+          def as_ruby(v)
+            raise ConversionError.new("nil is not allowed", value: v) if v.nil?
+            v
           end
 
-          def as_json(s)
-            s
+          def as_json(v)
+            raise ConversionError.new("nil is not allowed", value: v) if v.nil?
+            v
           end
         end
 
         Boolean = TypeConverter.new(name: 'Boolean') do
           def as_ruby(b)
-            !!b
+            raise ConversionError.new("Boolean value is expected", value: b) unless true == b || false == b
+            b
           end
 
           def as_json(b)
+            raise ConversionError.new("nil is not allowed", value: b) if b.nil?
             !!b
           end
         end
 
         Number = TypeConverter.new(name: 'Number') do
           def as_ruby(f)
-            f.kind_of?(Integer) ? f : f.to_f
+            raise ConversionError.new("Integer or Float value is expected", value: f) unless Integer === f || Float === f
+            f
           end
 
           def as_json(f)
-            f.kind_of?(Integer) ? f : f.to_f
+            raise ConversionError.new("nil is not allowed", value: f)
+            f.kind_of?(Integer) ? f : Float(f)
           end
         end
 
         String = TypeConverter.new(name: 'String') do
           def as_ruby(s)
+            raise ConversionError.new("String value is expected", value: s) unless ::String === s
             s.to_s
           end
 
           def as_json(s)
+            raise ConversionError.new("nil is not allowed", value: s) if s.nil?
             s.to_s
           end
         end
@@ -366,10 +383,12 @@ module OBS
           def [](element_type)
             TypeConverter.new(name: "Array[#{element_type.name}]", element_type: element_type) do
               def as_ruby(a)
-                a.to_a.map {|v| @element_type.as_ruby(v) }
+                raise ConversionError.new("Array value is expected", value: a) unless Array === a
+                a.map {|v| @element_type.as_ruby(v) }
               end
 
               def as_json(a)
+                raise ConversionError.new("nil is not allowed", value: a) if a.nil?
                 a.to_a.map {|v| @element_type.as_json(v) }
               end
             end
@@ -378,16 +397,19 @@ module OBS
 
         Object = TypeConverter.new(name: 'Object') do
           def as_ruby(o)
+            raise ConversionError.new("Hash value is expected", value: a) unless Hash === o
             o.to_h
           end
 
           def as_json(o)
+            raise ConversionError.new("nil is not allowed", value: o) if o.nil?
             o.to_h
           end
 
           def [](fields)
             TypeConverter.new(name: "Object[#{fields.keys.map(&:to_s).join(', ')}]", fields: fields) do
               def as_ruby(o)
+                raise ConversionError.new("Hash value is expected", value: a) unless Hash === o
                 @fields.to_h do |name, field|
                   wire_name = field[:wire_name]
                   type = field[:type]
@@ -395,7 +417,8 @@ module OBS
                 end
               end
 
-              def as_json(a)
+              def as_json(o)
+                raise ConversionError.new("nil is not allowed", value: o) if o.nil?
                 @fields.to_h do |name, field|
                   wire_name = field[:wire_name]
                   type = field[:type]
@@ -428,8 +451,8 @@ module OBS
         end
 
         private def get_field(name, type)
-          type.as_ruby(@json[name])
-        end
+                  type.as_ruby(@json[name])
+                end
 
         def as_json(*)
           @json
@@ -482,8 +505,8 @@ module OBS
         end
 
         private def get_field(name, type)
-          type.as_ruby(@json[name])
-        end
+                  type.as_ruby(@json[name])
+                end
       end
 
       require_relative 'websocket/protocol'
