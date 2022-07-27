@@ -64,7 +64,7 @@ RSpec.describe OBS::WebSocket::Client, :integration do
         expect(ret.rpc_version).to be_an Integer
         expect(ret.available_requests).to be_an(Array).and all be_a String
       end
-
+    ensure
       subject.close
     end
 
@@ -85,7 +85,7 @@ RSpec.describe OBS::WebSocket::Client, :integration do
           "monitorPositionY" => an_instance_of(Integer),
         })
       end
-
+    ensure
       subject.close
     end
 
