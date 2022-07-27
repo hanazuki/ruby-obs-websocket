@@ -55,6 +55,26 @@ RSpec.describe OBS::WebSocket::Client, :integration do
     end
   end
 
+  fcontext 'On request errors' do
+    specify 'Future is rejected' do
+      subject.password = websocket_password
+      subject.on_open do
+        ret = subject.broadcast_custom_event(event_data: {})  # empty data is not accepted
+        expect { ret.value! }.to raise_error {|err|
+          aggregate_failures do
+            expect(err).to be_an OBS::WebSocket::RequestError
+            expect(err.code).to be OBS::WebSocket::Protocol::Enums::RequestStatus::RequestFieldEmpty
+            expect(err.comment).to be_a String
+          end
+        }
+      ensure
+        subject.close
+      end
+
+      start_driver
+    end
+  end
+
   example '#get_obs_version' do
     subject.password = websocket_password
     subject.on_open do
