@@ -32,7 +32,7 @@ RSpec.describe OBS::WebSocket::Client, :integration do
     example 'on_close callback is called with error' do
       expect do |cb|
         subject.password = "wrongpassword"
-        subject.on_close(&cb)
+        subject.on_close(executor: :immediate, &cb)
 
         start_driver
       end.to yield_with_args([4009, String])
