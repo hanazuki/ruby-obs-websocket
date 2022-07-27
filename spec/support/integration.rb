@@ -4,7 +4,7 @@ require 'tmpdir'
 require 'uri'
 require 'websocket/driver'
 
-RSpec.shared_context 'With running OBS' do
+RSpec.shared_context 'With running OBS', :concurrency do
   let(:websocket_port) do
     s = TCPServer.new('localhost', 0)
     s.addr[1]

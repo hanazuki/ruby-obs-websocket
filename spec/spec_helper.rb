@@ -14,6 +14,11 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  config.when_first_matching_example_defined(:concurrency) do
+    require_relative 'support/concurrency'
+    config.include_context 'Concurrency', :concurrency
+  end
+
   config.when_first_matching_example_defined(:integration) do
     require_relative 'support/integration'
     config.include_context 'With running OBS', :integration
