@@ -6,7 +6,7 @@ end
 
 RSpec.describe OBS::WebSocket::Client, :integration do
 
-  subject { OBS::WebSocket::Client.new(websocket) }
+  subject { OBS::WebSocket::Client.new(websocket, executor: executor) }
 
   context 'When authentication succeeds' do
     example 'on_open callback is called' do
@@ -32,7 +32,7 @@ RSpec.describe OBS::WebSocket::Client, :integration do
     example 'on_close callback is called with error' do
       expect do |cb|
         subject.password = "wrongpassword"
-        subject.on_close(&cb)
+        subject.on_close(executor: :immediate, &cb)
 
         start_driver
       end.to yield_with_args([4009, String])
@@ -59,10 +59,12 @@ RSpec.describe OBS::WebSocket::Client, :integration do
     subject.password = websocket_password
     subject.on_open do
       ret = subject.get_version.value!
-      expect(ret.obs_version).to be_a String
-      expect(ret.rpc_version).to be_an Integer
-      expect(ret.available_requests).to be_an Array
-      expect(ret.available_requests).to all be_a String
+      aggregate_failures do
+        expect(ret.obs_version).to be_a String
+        expect(ret.rpc_version).to be_an Integer
+        expect(ret.available_requests).to be_an Array
+        expect(ret.available_requests).to all be_a String
+      end
 
       subject.close
     end
