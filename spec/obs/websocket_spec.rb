@@ -62,8 +62,28 @@ RSpec.describe OBS::WebSocket::Client, :integration do
       aggregate_failures do
         expect(ret.obs_version).to be_a String
         expect(ret.rpc_version).to be_an Integer
-        expect(ret.available_requests).to be_an Array
-        expect(ret.available_requests).to all be_a String
+        expect(ret.available_requests).to be_an(Array).and all be_a String
+      end
+
+      subject.close
+    end
+
+    start_driver
+  end
+
+  example '#get_monitor_list' do
+    subject.password = websocket_password
+    subject.on_open do
+      ret = subject.get_monitor_list.value!
+      aggregate_failures do
+        expect(ret.monitors).to be_an(Array).and all matching({
+          "monitorHeight" => an_instance_of(Integer),
+          "monitorWidth" => an_instance_of(Integer),
+          "monitorIndex" => an_instance_of(Integer),
+          "monitorName" => an_instance_of(String),
+          "monitorPositionX" => an_instance_of(Integer),
+          "monitorPositionY" => an_instance_of(Integer),
+        })
       end
 
       subject.close
