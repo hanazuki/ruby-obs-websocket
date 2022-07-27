@@ -1,94 +1,21 @@
 require 'obs/websocket'
 
-require 'socket'
-require 'timeout'
-require 'tmpdir'
-require 'uri'
-require 'websocket/driver'
-
 RSpec.configure do |config|
-  config.example_status_persistence_file_path = '.rspec_status'
-
   config.disable_monkey_patching!
+
+  config.example_status_persistence_file_path = '.rspec_status'
+  config.fail_if_no_examples = true
+  config.filter_run_when_matching :focus
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
-  end
-end
-
-RSpec.shared_context 'integration', :integration do
-  let(:websocket_port) do
-    s = TCPServer.new('localhost', 0)
-    s.addr[1]
-  ensure
-    s.close
+    c.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
-  let(:websocket_password) { 'supersecretpassword' }
+  config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  around do |example|
-    skip 'DISPLAY not available' unless ENV.key?('DISPLAY')
-
-    home = Pathname(Dir.mktmpdir)
-    home.join('obs-studio').tap(&:mkpath).join('logs')
-      .make_symlink(Pathname(__dir__).join('../tmp/config/obs-studio/logs').tap(&:mkpath))
-
-    @pid = spawn(
-      {
-        'XDG_CONFIG_HOME' => home.to_s
-      },
-      'obs', '-m',
-      "--websocket_port=#{websocket_port}",
-      "--websocket_password=#{websocket_password}",
-      '--websocket_debug',
-      out: File::NULL, err: File::NULL
-    )
-    example.run
-  ensure
-    begin
-      Process.kill(:TERM, @pid)
-      Process.detach(@pid)
-    rescue Errno::ECHILD
-      # noop
-    end if @pid
-  end
-
-  let(:websocket) do
-    cnt = 0
-    begin
-      @socket = TCPSocket.new('localhost', websocket_port)
-    rescue Errno::ECONNREFUSED
-      sleep 0.1
-      cnt += 1
-      retry if cnt < 20
-      raise
-    end
-
-    @driver = WebSocket::Driver.client(SocketWrapper.new("ws://localhost:#{websocket_port}", @socket))
-  end
-
-  def start_driver
-    @driver.start
-
-    Timeout.timeout(5) do
-      loop do
-        @driver.parse(@socket.readpartial(4096))
-      rescue EOFError
-        break
-      end
-    end
-  end
-
-  class SocketWrapper
-    def initialize(url, socket)
-      @url = url.to_s
-      @socket = socket
-    end
-
-    attr_reader :url
-
-    def write(s)
-      @socket.write(s)
-    end
+  config.when_first_matching_example_defined(:integration) do
+    require_relative 'support/integration'
+    config.include_context 'With running OBS', :integration
   end
 end
