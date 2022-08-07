@@ -1,0 +1,6 @@
+source "https://rubygems.org"
+
+gem "obs-websocket", path: "../.."
+gem "websocket-driver"
+gem "voicemeeter_api_ruby", "~> 4.3.0"
+gem "toml", "~> 0.3.0"

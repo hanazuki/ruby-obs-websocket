@@ -8,16 +8,26 @@ GEM
   remote: https://rubygems.org/
   specs:
     concurrent-ruby (1.1.10)
+    ffi (1.15.5-x64-mingw-ucrt)
+    observer (0.1.1)
+    parslet (2.0.0)
+    toml (0.3.0)
+      parslet (>= 1.8.0, < 3.0.0)
+    voicemeeter_api_ruby (4.3.1)
+      ffi (~> 1.9, >= 1.9.10)
+      observer (~> 0.1.1)
+      toml (~> 0.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
 
 PLATFORMS
   x64-mingw-ucrt
-  x86_64-linux
 
 DEPENDENCIES
   obs-websocket!
+  toml (~> 0.3.0)
+  voicemeeter_api_ruby (~> 4.3.0)
   websocket-driver
 
 BUNDLED WITH

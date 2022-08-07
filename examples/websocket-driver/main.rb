@@ -1,23 +1,18 @@
 #!/usr/bin/env ruby
 # SPDX-License-Identifier: MIT
 
-require 'obs/websocket'
-require 'socket'
-require 'uri'
-require 'websocket/driver'
+require "obs/websocket"
+require "socket"
 
 class Main
-  def run(uri, password = nil)
-    connect(URI.parse(uri))
+  def run(uri = nil, password = nil)
+    @driver = OBS::Connection.connect(uri, password)
 
-    tracer = Tracer.new if ENV.key?('TRACE')
+    tracer = Tracer.new if ENV.key?("TRACE")
 
-    # To initialize OBS::WebSocket, pass a WebSocket connection,
+    # To initialize OBS::WS, pass a WebSocket connection,
     # and optionally a tracer for debugging.
-    obs = OBS::WebSocket::Client.new(@driver, tracer: tracer)
-
-    # If the server requires authentication, set the password before starting communication.
-    obs.password = password
+    obs = OBS::WS::Client.new(@driver, tracer: tracer)
 
     # Once the client is identified by the server, the handlers registered with `on_open` are called back.
     obs.on_open do
@@ -27,7 +22,9 @@ class Main
 
       # Pass request parameters using keyword arguments. Composite types are mapped to Hash objects.
       obs.broadcast_custom_event(
-        event_data: {greeting: 'Hello, World!'}
+        event_data: {
+          greeting: "Hello, World!"
+        }
       ).wait!
     rescue => e
       $stderr.puts e.message
@@ -36,7 +33,7 @@ class Main
 
     # Listen for events using `on_*` methods. The event payload is yielded to the block.
     obs.on_custom_event do |ev|
-      puts ev.data['greeting']
+      puts ev.data["greeting"]
       obs.close
     end
 
@@ -48,40 +45,10 @@ class Main
     end
 
     # Now start the websocket driver to begin the communication with the server.
-    start_driver
+    obs.start_driver
   end
 
   private
-
-  def connect(uri)
-    fail ArgumentError, 'Only supports ws:// URI' unless uri.scheme == 'ws'
-
-    @socket = TCPSocket.new(uri.host, uri.port || 80)
-    @driver = WebSocket::Driver.client(SocketWrapper.new(uri, @socket))
-  end
-
-  def start_driver
-    @driver.start
-
-    loop do
-      @driver.parse(@socket.readpartial(4096))
-    rescue EOFError
-      break
-    end
-  end
-
-  class SocketWrapper
-    def initialize(url, socket)
-      @url = url.to_s
-      @socket = socket
-    end
-
-    attr_reader :url
-
-    def write(s)
-      @socket.write(s)
-    end
-  end
 
   class Tracer
     def send_message(msg)

@@ -11,3 +11,5 @@
 .rspec_status
 
 *.bak
+
+config.toml
