@@ -2,7 +2,7 @@ require_relative "lib/obs/ws/version"
 
 Gem::Specification.new do |spec|
   spec.name = "obs-websocket"
-  spec.version = OBS::WebSocket::VERSION
+  spec.version = OBS::WS::VERSION
   spec.authors = ["Kasumi Hanazuki"]
   spec.email = ["kasumi@rollingapple.net"]
 
