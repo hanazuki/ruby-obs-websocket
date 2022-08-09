@@ -5,7 +5,12 @@ RSpec.configure do |config|
 
   config.example_status_persistence_file_path = '.rspec_status'
   config.fail_if_no_examples = true
-  config.filter_run_when_matching :focus
+
+  if ENV['CI']
+    config.before(:example, :focus) { raise 'Should not commit focused specs' }
+  else
+    config.filter_run_when_matching :focus
+  end
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
