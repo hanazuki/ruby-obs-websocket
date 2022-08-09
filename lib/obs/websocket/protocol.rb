@@ -1,4 +1,11 @@
 # frozen_string_literal: false
+#
+# ** DO NOT EDIT - AUTO-GENERATED CODE **
+#
+# To edit the content of this file, modify `codegen/generate-protocol` then run `rake codegen`.
+#
+# ** DO NOT EDIT - AUTO-GENERATED CODE **
+#
 
 # The protocol definition of obs-websocket. Generated from <https://raw.githubusercontent.com/obsproject/obs-websocket/5.0.0/docs/generated/protocol.json>.
 # @see https://github.com/obsproject/obs-websocket/blob/5.0.0/docs/generated/protocol.md

@@ -166,6 +166,13 @@ end
 
 puts <<EOF
 # frozen_string_literal: false
+#
+# ** DO NOT EDIT - AUTO-GENERATED CODE **
+#
+# To edit the content of this file, modify `codegen/generate-protocol` then run `rake codegen`.
+#
+# ** DO NOT EDIT - AUTO-GENERATED CODE **
+#
 
 # The protocol definition of obs-websocket. Generated from <#{protocol_uri}>.
 # @see #{doc_uri}
