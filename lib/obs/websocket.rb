@@ -35,7 +35,7 @@ module OBS
     class Connection
       attr_reader :socket, :driver, :password
 
-      def initialize(uri: nil, password: nil)
+      def initialize(uri:, password: nil)
           fail ArgumentError, 'Only supports ws:// URI' unless uri.scheme == 'ws'
           @password = password
           @socket = TCPSocket.new(uri.host, uri.port || 4455)
