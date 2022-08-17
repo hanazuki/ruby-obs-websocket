@@ -4,6 +4,8 @@ require 'concurrent'
 require 'digest/sha2'
 require 'json'
 require 'securerandom'
+require 'socket'
+require 'websocket/driver'
 
 require_relative 'websocket/version'
 
@@ -28,6 +30,30 @@ module OBS
       end
 
       attr_reader :value
+    end
+
+    class Connection
+      attr_reader :socket, :driver, :password
+
+      def initialize(uri: nil, password: nil)
+          fail ArgumentError, 'Only supports ws:// URI' unless uri.scheme == 'ws'
+          @password = password
+          @socket = TCPSocket.new(uri.host, uri.port || 4455)
+          @driver = ::WebSocket::Driver.client(SocketWrapper.new(uri, @socket))
+      end
+
+      class SocketWrapper
+        def initialize(url, socket)
+          @url = url.to_s
+          @socket = socket
+        end
+
+        attr_reader :url
+
+        def write(s)
+          @socket.write(s)
+        end
+      end
     end
 
     # Shortcut for {OBS::WebSocket::Client#initialize}

@@ -3,6 +3,7 @@ PATH
   specs:
     obs-websocket (0.1.1)
       concurrent-ruby (~> 1.1)
+      websocket-driver (~> 0.7.5)
 
 GEM
   remote: https://rubygems.org/
@@ -13,11 +14,11 @@ GEM
     websocket-extensions (0.1.5)
 
 PLATFORMS
+  x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
   obs-websocket!
-  websocket-driver
 
 BUNDLED WITH
    2.3.18

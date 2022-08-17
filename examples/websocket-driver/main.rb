@@ -3,21 +3,19 @@
 
 require 'obs/websocket'
 require 'socket'
-require 'uri'
-require 'websocket/driver'
 
 class Main
   def run(uri, password = nil)
-    connect(URI.parse(uri))
+    @connection = OBS::WebSocket::Connection.new(uri: URI.parse(uri), password: password)
 
     tracer = Tracer.new if ENV.key?('TRACE')
 
     # To initialize OBS::WebSocket, pass a WebSocket connection,
     # and optionally a tracer for debugging.
-    obs = OBS::WebSocket::Client.new(@driver, tracer: tracer)
+    obs = OBS::WebSocket::Client.new(@connection.driver, tracer: tracer)
 
     # If the server requires authentication, set the password before starting communication.
-    obs.password = password
+    obs.password = @connection.password
 
     # Once the client is identified by the server, the handlers registered with `on_open` are called back.
     obs.on_open do
@@ -53,33 +51,13 @@ class Main
 
   private
 
-  def connect(uri)
-    fail ArgumentError, 'Only supports ws:// URI' unless uri.scheme == 'ws'
-
-    @socket = TCPSocket.new(uri.host, uri.port || 80)
-    @driver = WebSocket::Driver.client(SocketWrapper.new(uri, @socket))
-  end
-
   def start_driver
-    @driver.start
+    @connection.driver.start
 
     loop do
-      @driver.parse(@socket.readpartial(4096))
+      @connection.driver.parse(@connection.socket.readpartial(4096))
     rescue EOFError
       break
-    end
-  end
-
-  class SocketWrapper
-    def initialize(url, socket)
-      @url = url.to_s
-      @socket = socket
-    end
-
-    attr_reader :url
-
-    def write(s)
-      @socket.write(s)
     end
   end
 
