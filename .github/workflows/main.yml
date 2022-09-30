@@ -7,9 +7,6 @@ on:
   schedule:
     - cron: '0 15 * * 5'
 
-env:
-  OBSWS_VERSION: '5.0.0'
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,18 +16,11 @@ jobs:
       with:
         ruby-version: '3.1'
         bundler-cache: true
-    - name: Download obs-websocket
-      run: |
-        fname=obs-websocket-${OBSWS_VERSION}-Ubuntu64.zip
-        curl -LOfsS "https://github.com/Palakis/obs-websocket/releases/download/${OBSWS_VERSION}/$fname"
-        sha256sum -c <<<"2ed02f98639b1160cd6eded084fb82a98bd12593bf3367e6769e999af61eb344 *./$fname"
-        unzip "$fname"
-      working-directory: /tmp
     - name: Install packages
       run: |
         sudo add-apt-repository -y ppa:obsproject/obs-studio
         sudo apt-get update -qq
-        sudo apt-get install -y --no-install-recommends /tmp/obs-websocket-*.deb xvfb netcat-openbsd psmisc
+        sudo apt-get install -y --no-install-recommends obs-studio xvfb netcat-openbsd psmisc
     - name: Start OBS
       run: |
         spec/run_obs 4455 very-secure-password &
