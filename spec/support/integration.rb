@@ -1,3 +1,5 @@
+require 'fileutils'
+require 'pathname'
 require 'socket'
 require 'timeout'
 require 'tmpdir'
@@ -20,6 +22,7 @@ RSpec.shared_context 'With running OBS', :concurrency do
     home = Pathname(Dir.mktmpdir)
     home.join('obs-studio').tap(&:mkpath).join('logs')
       .make_symlink(Pathname.getwd.join('tmp/config/obs-studio/logs').tap(&:mkpath))
+    FileUtils.cp_r(Pathname(__dir__).join('../config/obs-studio'), home)
 
     @pid = spawn(
       {

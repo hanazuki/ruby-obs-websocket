@@ -4,6 +4,7 @@ require 'pathname'
 require 'fileutils'
 
 xdg_config_home = Pathname(__dir__).join('../tmp/config').tap(&:mkpath)
+FileUtils.cp_r(Pathname(__dir__).join('config/obs-studio'), xdg_config_home)
 
 env = {
   'XDG_CONFIG_HOME' => xdg_config_home.to_s,
@@ -17,6 +18,8 @@ unless ENV.key?('DISPLAY')
 end
 
 redirect = $stdin.tty? ? {} : {out: File::NULL, err: File::NULL}
+
+p command
 
 exec(
   env,
