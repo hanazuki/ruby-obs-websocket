@@ -55,7 +55,7 @@ RSpec.describe OBS::WebSocket::Client, :integration do
     end
   end
 
-  fcontext 'On request errors' do
+  context 'On request errors' do
     specify 'Future is rejected' do
       subject.password = websocket_password
       subject.on_open do
