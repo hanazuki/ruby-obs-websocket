@@ -176,7 +176,8 @@ puts <<EOF
 
 # The protocol definition of obs-websocket. Generated from <#{protocol_uri}>.
 # @see #{doc_uri}
-module OBS::WebSocket::Protocol
+module OBS::WebSocket
+module Protocol
   # The version of obs-websocket from which this protocol definition is genereted.
   VERSION = #{@api_version.dump}
 EOF
@@ -307,7 +308,7 @@ events.each do |name, event|
   puts <<EOF
   # Adds an event handler for <tt>#{name}</tt> event.
   # @param executor the executor on which the callback is invoked
-  # @yieldparam event [Events::#{name}] the event object
+  # @yieldparam event [Protocol::Events::#{name}] the event object
   # @return [void]
   # @see #{doc_uri(name)}
 EOF
@@ -343,7 +344,7 @@ EOF
   # @deprecated This type of request is deprecated.
 EOF
   puts <<EOF
-  # @return [Future<Responses::#{name}>]
+  # @return [Concurrent::Promises::Future<Protocol::Responses::#{name}, Exception>]
   def #{name.underscore}(#{request[:request_fields].map {|fname, field| "#{fname}:#{" nil" if field[:type].optional?}" }.join(', ')})
     send_request(Requests::#{name}.new({#{request[:request_fields].map {|fname,| "#{fname}: #{fname}" }.join(', ')}}))
   end
@@ -356,5 +357,6 @@ end  # module Mixins
 EOF
 
 puts <<EOF
-end  # module OBS::WebSocket::Protocol
+end  # module Protocol
+end  # module OBS::WebSocket
 EOF

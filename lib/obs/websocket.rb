@@ -78,7 +78,7 @@ module OBS
       end
 
       # Sets the password for authentication.
-      # @param [String, Proc] value the password string or a proc that returns it
+      # @param [String, Proc, nil] value the password string or a proc that returns it
       attr_writer :password
 
       # Subscribes for events.
@@ -101,7 +101,7 @@ module OBS
       #
       # @param executor the executor on which the callback is invoked
       # @yield Called when obs-websocket connection is established.
-      # @return [Future]
+      # @return [Concurrent::Promises::Event]
       def on_open(executor: default_executor, &listener)
         if listener
           @on_open.chain_on(executor, &listener)
@@ -114,7 +114,7 @@ module OBS
       #
       # @param executor the executor on which the callback is invoked
       # @yield Called when obs-websocket connection is terminated.
-      # @return [Future]
+      # @return [Concurrent::Promises::Future<untyped, Exception>]
       def on_close(executor: default_executor, &listener)
         if listener
           @on_close.then_on(executor, &listener)
