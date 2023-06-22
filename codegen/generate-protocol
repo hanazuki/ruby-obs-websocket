@@ -155,6 +155,8 @@ events = protocol.fetch('events').to_h do |event|
   ]
 end
 
+events.delete('CustomEvent')
+
 requests = protocol.fetch('requests').to_h do |req|
   [
     req.fetch('requestType'),
