@@ -140,7 +140,7 @@ enums = protocol.fetch('enums').to_h do |enum|
     members: enum.fetch('enumIdentifiers').to_h {|mem|
       [
         mem.fetch('enumIdentifier'),
-        value: mem.fetch('enumValue'),
+        value: mem.fetch('enumValue') == mem.fetch('enumIdentifier') ? mem.fetch('enumIdentifier').dump : mem.fetch('enumValue'),
         deprecated: mem.fetch('deprecated'),
       ]
     },
@@ -189,8 +189,6 @@ module Enums
 EOF
 
 enums.each do |name, enum|
-  next if name == 'ObsMediaInputAction'  # This type has an ill-formed documentation
-
   puts <<EOF
   # @see #{doc_uri(name)}
   module #{name}

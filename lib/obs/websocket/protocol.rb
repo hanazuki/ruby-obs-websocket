@@ -136,23 +136,40 @@ module Enums
   # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstate
   module ObsOutputState
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputunknown
-    OBS_WEBSOCKET_OUTPUT_UNKNOWN = OBS_WEBSOCKET_OUTPUT_UNKNOWN
+    OBS_WEBSOCKET_OUTPUT_UNKNOWN = "OBS_WEBSOCKET_OUTPUT_UNKNOWN"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputstarting
-    OBS_WEBSOCKET_OUTPUT_STARTING = OBS_WEBSOCKET_OUTPUT_STARTING
+    OBS_WEBSOCKET_OUTPUT_STARTING = "OBS_WEBSOCKET_OUTPUT_STARTING"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputstarted
-    OBS_WEBSOCKET_OUTPUT_STARTED = OBS_WEBSOCKET_OUTPUT_STARTED
+    OBS_WEBSOCKET_OUTPUT_STARTED = "OBS_WEBSOCKET_OUTPUT_STARTED"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputstopping
-    OBS_WEBSOCKET_OUTPUT_STOPPING = OBS_WEBSOCKET_OUTPUT_STOPPING
+    OBS_WEBSOCKET_OUTPUT_STOPPING = "OBS_WEBSOCKET_OUTPUT_STOPPING"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputstopped
-    OBS_WEBSOCKET_OUTPUT_STOPPED = OBS_WEBSOCKET_OUTPUT_STOPPED
+    OBS_WEBSOCKET_OUTPUT_STOPPED = "OBS_WEBSOCKET_OUTPUT_STOPPED"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputreconnecting
-    OBS_WEBSOCKET_OUTPUT_RECONNECTING = OBS_WEBSOCKET_OUTPUT_RECONNECTING
+    OBS_WEBSOCKET_OUTPUT_RECONNECTING = "OBS_WEBSOCKET_OUTPUT_RECONNECTING"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputreconnected
-    OBS_WEBSOCKET_OUTPUT_RECONNECTED = OBS_WEBSOCKET_OUTPUT_RECONNECTED
+    OBS_WEBSOCKET_OUTPUT_RECONNECTED = "OBS_WEBSOCKET_OUTPUT_RECONNECTED"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputpaused
-    OBS_WEBSOCKET_OUTPUT_PAUSED = OBS_WEBSOCKET_OUTPUT_PAUSED
+    OBS_WEBSOCKET_OUTPUT_PAUSED = "OBS_WEBSOCKET_OUTPUT_PAUSED"
     # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsoutputstateobswebsocketoutputresumed
-    OBS_WEBSOCKET_OUTPUT_RESUMED = OBS_WEBSOCKET_OUTPUT_RESUMED
+    OBS_WEBSOCKET_OUTPUT_RESUMED = "OBS_WEBSOCKET_OUTPUT_RESUMED"
+  end
+  # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputaction
+  module ObsMediaInputAction
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionnone
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NONE = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NONE"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionplay
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PLAY = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PLAY"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionpause
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PAUSE = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PAUSE"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionstop
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_STOP = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_STOP"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionrestart
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_RESTART = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_RESTART"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionnext
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NEXT = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NEXT"
+    # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#obsmediainputactionobswebsocketmediainputactionprevious
+    OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PREVIOUS = "OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PREVIOUS"
   end
   # @see https://github.com/obsproject/obs-websocket/blob/5.2.3/docs/generated/protocol.md#websocketclosecode
   module WebSocketCloseCode
