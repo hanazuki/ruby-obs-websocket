@@ -167,7 +167,7 @@ requests = protocol.fetch('requests').to_h do |req|
 end
 
 puts <<EOF
-# frozen_string_literal: false
+# frozen_string_literal: true
 #
 # ** DO NOT EDIT - AUTO-GENERATED CODE **
 #
