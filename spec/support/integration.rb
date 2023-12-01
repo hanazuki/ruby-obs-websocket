@@ -19,15 +19,18 @@ RSpec.shared_context 'With running OBS', :concurrency do
   around do |example|
     skip 'DISPLAY not available' unless ENV.key?('DISPLAY')
 
-    home = Pathname(Dir.mktmpdir)
-    home.join('obs-studio').tap(&:mkpath).join('logs')
-      .make_symlink(Pathname.getwd.join('tmp/config/obs-studio/logs').tap(&:mkpath))
+    home = Pathname(Dir.mktmpdir(nil, Pathname.getwd.join('tmp').tap(&:mkpath)))
     FileUtils.cp_r(Pathname(__dir__).join('../config/obs-studio'), home)
 
+    env = {
+      'XDG_CONFIG_HOME' => home.to_s
+    }
+
     @pid = spawn(
-      {
-        'XDG_CONFIG_HOME' => home.to_s
-      },
+      *(ENV.key?('USE_FLATPAK_OBS_STUDIO') ?
+        %w[flatpak run --command=env com.obsproject.Studio] :
+        %w[env]),
+      *env.map {|k, v| "#{k}=#{v}" },
       'obs', '-m',
       "--websocket_port=#{websocket_port}",
       "--websocket_password=#{websocket_password}",

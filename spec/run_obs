@@ -3,15 +3,30 @@
 require 'pathname'
 require 'fileutils'
 
+port, password = ARGV
+
 xdg_config_home = Pathname(__dir__).join('../tmp/config').tap(&:mkpath)
 FileUtils.cp_r(Pathname(__dir__).join('config/obs-studio'), xdg_config_home)
 
 env = {
   'XDG_CONFIG_HOME' => xdg_config_home.to_s,
 }
-
-port, password = ARGV
 command = %W[obs --websocket_port=#{port} --websocket_password=#{password} --websocket_debug]
+
+if ENV.key?('USE_FLATPAK_OBS_STUDIO')
+  command.unshift(
+    'flatpak',
+    'run',
+    '--command=env',
+    'com.obsproject.Studio',
+    *env.map {|k, v| "#{k}=#{v}"},
+  )
+else
+  command.unshift(
+    'env',
+    *env.map {|k, v| "#{k}=#{v}"},
+  )
+end
 
 unless ENV.key?('DISPLAY')
   command.unshift 'xvfb-run', '-a'
@@ -22,7 +37,6 @@ redirect = $stdin.tty? ? {} : {out: File::NULL, err: File::NULL}
 p command
 
 exec(
-  env,
   *command,
   **redirect,
 )
