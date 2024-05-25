@@ -346,7 +346,7 @@ module OBS
           end
 
           def as_json(f)
-            raise ConversionError.new("nil is not allowed", value: f)
+            raise ConversionError.new("nil is not allowed", value: f) if f.nil?
             f.kind_of?(Integer) ? f : Float(f)
           end
         end
